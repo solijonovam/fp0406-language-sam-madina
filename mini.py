@@ -18,7 +18,27 @@ from MiniAST import MiniAST
 
 # reserved words / keywords
 reserved = {
-    "pass": "PASS"
+    "pass": "PASS",
+    "say": "SAY",
+    "set": "SET",
+    "input": "INPUT",
+    "if": "IF",
+    "else": "ELSE",
+    "while": "WHILE",
+    "end": "END",
+    "true": "TRUE",
+    "false": "FALSE",
+    "and": "AND",
+    "or": "OR",
+    "not": "NOT",
+    "function": "FUNCTION",
+    "return": "RETURN",
+    "class": "CLASS",
+    "object": "OBJECT",
+    "constructor": "CONSTRUCTOR",
+    "try": "TRY",
+    "catch": "CATCH",
+    "finally": "FINALLY"
 }
 
 # tokens
@@ -43,7 +63,7 @@ comments = {}
 # noinspection PySingleQuotedDocstring
 def t_NAME(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reserved.get(t.value, 'NAME')    # Check for reserved words
+    t.type = reserved.get(t.value, 'NAME')  # Check for reserved words
     return t
 
 
@@ -241,6 +261,81 @@ def p_expression_name(p):
     p[0] = ASTNODE("name", value=p[1])
 
 
+def p_simple_statement_say(p):
+    """simple_statement : SAY expression"""
+    p[0] = ASTNODE("say", children=[p[2]])
+
+
+def p_simple_statement_set(p):
+    """simple_statement : SET NAME "=" expression"""
+    p[0] = ASTNODE("set", value=p[2], children=[p[4]])
+
+
+def p_simple_statement_input(p):
+    """simple_statement : INPUT NAME"""
+    p[0] = ASTNODE("input", value=p[2])
+
+
+def p_simple_statement_if(p):
+    """simple_statement : IF expression ':' suite ELSE ':' suite"""
+    p[0] = ASTNODE("if", children=[p[2], p[4], p[7]])
+
+
+def p_simple_statement_while(p):
+    """simple_statement : WHILE expression ':' suite"""
+    p[0] = ASTNODE("while", children=[p[2], p[4]])
+
+
+def p_simple_statement_function(p):
+    """simple_statement : FUNCTION NAME '(' parameters ')' ':' suite"""
+    p[0] = ASTNODE("function", value=p[2], children=[p[4], p[7]])
+
+
+def p_simple_statement_return(p):
+    """simple_statement : RETURN expression"""
+    p[0] = ASTNODE("return", children=[p[2]])
+
+
+def p_expression_boolean_op(p):
+    """expression : expression AND expression
+                  | expression OR expression
+                  | NOT expression"""
+    if len(p) == 4:
+        p[0] = ASTNODE("boolean_op", value=p[2], children=[p[1], p[3]])
+    else:
+        p[0] = ASTNODE("boolean_op", value=p[1], children=[p[2]])
+
+
+def p_simple_statement_class(p):
+    """simple_statement : CLASS NAME ':' suite"""
+    p[0] = ASTNODE("class", value=p[2], children=[p[4]])
+
+
+def p_simple_statement_object(p):
+    """simple_statement : OBJECT NAME '=' NAME '(' ')'"""
+    p[0] = ASTNODE("object", value=p[2], children=[p[4]])
+
+
+def p_simple_statement_constructor(p):
+    """simple_statement : CONSTRUCTOR '(' parameters ')' ':' suite"""
+    p[0] = ASTNODE("constructor", children=[p[3], p[6]])
+
+
+def p_simple_statement_try_catch_finally(p):
+    """simple_statement : TRY ':' suite catch finally"""
+    p[0] = ASTNODE("try_catch_finally", children=[p[3], p[4], p[5]])
+
+
+def p_catch(p):
+    """catch : CATCH expression ':' suite"""
+    p[0] = ASTNODE("catch", children=[p[2], p[4]])
+
+
+def p_finally(p):
+    """finally : FINALLY ':' suite"""
+    p[0] = ASTNODE("finally", children=[p[3]])
+
+
 # p_error() is required
 def p_error(p):
     try:
@@ -254,7 +349,6 @@ parser = yacc.yacc()
 # ---------------------------------------------------------- PROCESS INPUT
 
 if __name__ == "__main__":
-
     # a test program; the program can be read from a file, too;
     program = """
         // top of the program
