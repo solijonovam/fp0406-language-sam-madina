@@ -38,7 +38,9 @@ reserved = {
     "constructor": "CONSTRUCTOR",
     "try": "TRY",
     "catch": "CATCH",
-    "finally": "FINALLY"
+    "finally": "FINALLY",
+    "suite": "SUITE",
+    "parameters": "PARAMETERS"
 }
 
 # tokens
@@ -286,6 +288,11 @@ def p_simple_statement_while(p):
     p[0] = ASTNODE("while", children=[p[2], p[4]])
 
 
+def p_parameters(p):
+    """parameters : NAME"""
+    p[0] = ASTNODE("parameters", value=p[1])
+
+
 def p_simple_statement_function(p):
     """simple_statement : FUNCTION NAME '(' parameters ')' ':' suite"""
     p[0] = ASTNODE("function", value=p[2], children=[p[4], p[7]])
@@ -334,6 +341,13 @@ def p_catch(p):
 def p_finally(p):
     """finally : FINALLY ':' suite"""
     p[0] = ASTNODE("finally", children=[p[3]])
+
+
+def p_suite(p):
+    """
+    suite : '(' statement_list ')'
+    """
+    p[0] = ASTNODE('SUITE', [p[2]])
 
 
 # p_error() is required
