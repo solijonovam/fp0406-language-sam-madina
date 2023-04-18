@@ -1,5 +1,13 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    END
+    FALSE
+    PARAMETERS
+    SUITE
+    TRUE
+
 Grammar
 
 Rule 0     S' -> program
@@ -22,32 +30,77 @@ Rule 16    expression -> NUMBER
 Rule 17    expression -> DQ_STRING
 Rule 18    expression -> SQ_STRING
 Rule 19    expression -> NAME
+Rule 20    simple_statement -> SAY expression
+Rule 21    simple_statement -> SET NAME = expression
+Rule 22    simple_statement -> INPUT NAME
+Rule 23    simple_statement -> IF expression : suite ELSE : suite
+Rule 24    simple_statement -> WHILE expression : suite
+Rule 25    parameters -> NAME
+Rule 26    simple_statement -> FUNCTION NAME ( parameters ) : suite
+Rule 27    simple_statement -> RETURN expression
+Rule 28    expression -> expression AND expression
+Rule 29    expression -> expression OR expression
+Rule 30    expression -> NOT expression
+Rule 31    simple_statement -> CLASS NAME : suite
+Rule 32    simple_statement -> OBJECT NAME = NAME ( )
+Rule 33    simple_statement -> CONSTRUCTOR ( parameters ) : suite
+Rule 34    simple_statement -> TRY : suite catch finally
+Rule 35    catch -> CATCH expression : suite
+Rule 36    finally -> FINALLY : suite
+Rule 37    suite -> ( statement_list )
 
 Terminals, with rules where they appear
 
-(                    : 15
-)                    : 15
+(                    : 15 26 32 33 37
+)                    : 15 26 32 33 37
 *                    : 10
 +                    : 8 14
 -                    : 9 13
 /                    : 11
-=                    : 7
+:                    : 23 23 24 26 31 33 34 35 36
+=                    : 7 21 32
+AND                  : 28
+CATCH                : 35
+CLASS                : 31
+CONSTRUCTOR          : 33
 DQ_STRING            : 17
-NAME                 : 7 19
+ELSE                 : 23
+END                  : 
+FALSE                : 
+FINALLY              : 36
+FUNCTION             : 26
+IF                   : 23
+INPUT                : 22
+NAME                 : 7 19 21 22 25 26 31 32 32
+NOT                  : 30
 NUMBER               : 16
+OBJECT               : 32
+OR                   : 29
+PARAMETERS           : 
 PASS                 : 6
+RETURN               : 27
+SAY                  : 20
 SEMICOLON            : 4 5
+SET                  : 21
 SQ_STRING            : 18
+SUITE                : 
+TRUE                 : 
+TRY                  : 34
+WHILE                : 24
 ^                    : 12
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 7 8 8 9 9 10 10 11 11 12 12 13 14 15
+catch                : 34
+expression           : 7 8 8 9 9 10 10 11 11 12 12 13 14 15 20 21 23 24 27 28 28 29 29 30 35
+finally              : 34
+parameters           : 26 33
 program              : 0
 simple_statement     : 4
 statement            : 2 3
-statement_list       : 1 2
+statement_list       : 1 2 37
+suite                : 23 23 24 26 31 33 34 35 36
 
 Parsing method: LALR
 
@@ -61,10 +114,32 @@ state 0
     (5) statement -> . SEMICOLON
     (6) simple_statement -> . PASS
     (7) simple_statement -> . NAME = expression
+    (20) simple_statement -> . SAY expression
+    (21) simple_statement -> . SET NAME = expression
+    (22) simple_statement -> . INPUT NAME
+    (23) simple_statement -> . IF expression : suite ELSE : suite
+    (24) simple_statement -> . WHILE expression : suite
+    (26) simple_statement -> . FUNCTION NAME ( parameters ) : suite
+    (27) simple_statement -> . RETURN expression
+    (31) simple_statement -> . CLASS NAME : suite
+    (32) simple_statement -> . OBJECT NAME = NAME ( )
+    (33) simple_statement -> . CONSTRUCTOR ( parameters ) : suite
+    (34) simple_statement -> . TRY : suite catch finally
 
     SEMICOLON       shift and go to state 5
     PASS            shift and go to state 6
     NAME            shift and go to state 7
+    SAY             shift and go to state 8
+    SET             shift and go to state 9
+    INPUT           shift and go to state 10
+    IF              shift and go to state 11
+    WHILE           shift and go to state 12
+    FUNCTION        shift and go to state 13
+    RETURN          shift and go to state 14
+    CLASS           shift and go to state 15
+    OBJECT          shift and go to state 16
+    CONSTRUCTOR     shift and go to state 17
+    TRY             shift and go to state 18
 
     program                        shift and go to state 1
     statement_list                 shift and go to state 2
@@ -85,13 +160,35 @@ state 2
     (5) statement -> . SEMICOLON
     (6) simple_statement -> . PASS
     (7) simple_statement -> . NAME = expression
+    (20) simple_statement -> . SAY expression
+    (21) simple_statement -> . SET NAME = expression
+    (22) simple_statement -> . INPUT NAME
+    (23) simple_statement -> . IF expression : suite ELSE : suite
+    (24) simple_statement -> . WHILE expression : suite
+    (26) simple_statement -> . FUNCTION NAME ( parameters ) : suite
+    (27) simple_statement -> . RETURN expression
+    (31) simple_statement -> . CLASS NAME : suite
+    (32) simple_statement -> . OBJECT NAME = NAME ( )
+    (33) simple_statement -> . CONSTRUCTOR ( parameters ) : suite
+    (34) simple_statement -> . TRY : suite catch finally
 
     $end            reduce using rule 1 (program -> statement_list .)
     SEMICOLON       shift and go to state 5
     PASS            shift and go to state 6
     NAME            shift and go to state 7
+    SAY             shift and go to state 8
+    SET             shift and go to state 9
+    INPUT           shift and go to state 10
+    IF              shift and go to state 11
+    WHILE           shift and go to state 12
+    FUNCTION        shift and go to state 13
+    RETURN          shift and go to state 14
+    CLASS           shift and go to state 15
+    OBJECT          shift and go to state 16
+    CONSTRUCTOR     shift and go to state 17
+    TRY             shift and go to state 18
 
-    statement                      shift and go to state 8
+    statement                      shift and go to state 19
     simple_statement               shift and go to state 4
 
 state 3
@@ -101,14 +198,26 @@ state 3
     SEMICOLON       reduce using rule 3 (statement_list -> statement .)
     PASS            reduce using rule 3 (statement_list -> statement .)
     NAME            reduce using rule 3 (statement_list -> statement .)
+    SAY             reduce using rule 3 (statement_list -> statement .)
+    SET             reduce using rule 3 (statement_list -> statement .)
+    INPUT           reduce using rule 3 (statement_list -> statement .)
+    IF              reduce using rule 3 (statement_list -> statement .)
+    WHILE           reduce using rule 3 (statement_list -> statement .)
+    FUNCTION        reduce using rule 3 (statement_list -> statement .)
+    RETURN          reduce using rule 3 (statement_list -> statement .)
+    CLASS           reduce using rule 3 (statement_list -> statement .)
+    OBJECT          reduce using rule 3 (statement_list -> statement .)
+    CONSTRUCTOR     reduce using rule 3 (statement_list -> statement .)
+    TRY             reduce using rule 3 (statement_list -> statement .)
     $end            reduce using rule 3 (statement_list -> statement .)
+    )               reduce using rule 3 (statement_list -> statement .)
 
 
 state 4
 
     (4) statement -> simple_statement . SEMICOLON
 
-    SEMICOLON       shift and go to state 9
+    SEMICOLON       shift and go to state 20
 
 
 state 5
@@ -118,7 +227,19 @@ state 5
     SEMICOLON       reduce using rule 5 (statement -> SEMICOLON .)
     PASS            reduce using rule 5 (statement -> SEMICOLON .)
     NAME            reduce using rule 5 (statement -> SEMICOLON .)
+    SAY             reduce using rule 5 (statement -> SEMICOLON .)
+    SET             reduce using rule 5 (statement -> SEMICOLON .)
+    INPUT           reduce using rule 5 (statement -> SEMICOLON .)
+    IF              reduce using rule 5 (statement -> SEMICOLON .)
+    WHILE           reduce using rule 5 (statement -> SEMICOLON .)
+    FUNCTION        reduce using rule 5 (statement -> SEMICOLON .)
+    RETURN          reduce using rule 5 (statement -> SEMICOLON .)
+    CLASS           reduce using rule 5 (statement -> SEMICOLON .)
+    OBJECT          reduce using rule 5 (statement -> SEMICOLON .)
+    CONSTRUCTOR     reduce using rule 5 (statement -> SEMICOLON .)
+    TRY             reduce using rule 5 (statement -> SEMICOLON .)
     $end            reduce using rule 5 (statement -> SEMICOLON .)
+    )               reduce using rule 5 (statement -> SEMICOLON .)
 
 
 state 6
@@ -132,30 +253,223 @@ state 7
 
     (7) simple_statement -> NAME . = expression
 
-    =               shift and go to state 10
+    =               shift and go to state 21
 
 
 state 8
+
+    (20) simple_statement -> SAY . expression
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 22
+
+state 9
+
+    (21) simple_statement -> SET . NAME = expression
+
+    NAME            shift and go to state 31
+
+
+state 10
+
+    (22) simple_statement -> INPUT . NAME
+
+    NAME            shift and go to state 32
+
+
+state 11
+
+    (23) simple_statement -> IF . expression : suite ELSE : suite
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 33
+
+state 12
+
+    (24) simple_statement -> WHILE . expression : suite
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 34
+
+state 13
+
+    (26) simple_statement -> FUNCTION . NAME ( parameters ) : suite
+
+    NAME            shift and go to state 35
+
+
+state 14
+
+    (27) simple_statement -> RETURN . expression
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 36
+
+state 15
+
+    (31) simple_statement -> CLASS . NAME : suite
+
+    NAME            shift and go to state 37
+
+
+state 16
+
+    (32) simple_statement -> OBJECT . NAME = NAME ( )
+
+    NAME            shift and go to state 38
+
+
+state 17
+
+    (33) simple_statement -> CONSTRUCTOR . ( parameters ) : suite
+
+    (               shift and go to state 39
+
+
+state 18
+
+    (34) simple_statement -> TRY . : suite catch finally
+
+    :               shift and go to state 40
+
+
+state 19
 
     (2) statement_list -> statement_list statement .
 
     SEMICOLON       reduce using rule 2 (statement_list -> statement_list statement .)
     PASS            reduce using rule 2 (statement_list -> statement_list statement .)
     NAME            reduce using rule 2 (statement_list -> statement_list statement .)
+    SAY             reduce using rule 2 (statement_list -> statement_list statement .)
+    SET             reduce using rule 2 (statement_list -> statement_list statement .)
+    INPUT           reduce using rule 2 (statement_list -> statement_list statement .)
+    IF              reduce using rule 2 (statement_list -> statement_list statement .)
+    WHILE           reduce using rule 2 (statement_list -> statement_list statement .)
+    FUNCTION        reduce using rule 2 (statement_list -> statement_list statement .)
+    RETURN          reduce using rule 2 (statement_list -> statement_list statement .)
+    CLASS           reduce using rule 2 (statement_list -> statement_list statement .)
+    OBJECT          reduce using rule 2 (statement_list -> statement_list statement .)
+    CONSTRUCTOR     reduce using rule 2 (statement_list -> statement_list statement .)
+    TRY             reduce using rule 2 (statement_list -> statement_list statement .)
     $end            reduce using rule 2 (statement_list -> statement_list statement .)
+    )               reduce using rule 2 (statement_list -> statement_list statement .)
 
 
-state 9
+state 20
 
     (4) statement -> simple_statement SEMICOLON .
 
     SEMICOLON       reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     PASS            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     NAME            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    SAY             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    SET             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    INPUT           reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    IF              reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    WHILE           reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    FUNCTION        reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    RETURN          reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    CLASS           reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    OBJECT          reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    CONSTRUCTOR     reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    TRY             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     $end            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    )               reduce using rule 4 (statement -> simple_statement SEMICOLON .)
 
 
-state 10
+state 21
 
     (7) simple_statement -> NAME = . expression
     (8) expression -> . expression + expression
@@ -170,48 +484,43 @@ state 10
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 12
+    expression                     shift and go to state 41
 
-state 11
+state 22
 
-    (19) expression -> NAME .
-
-    +               reduce using rule 19 (expression -> NAME .)
-    -               reduce using rule 19 (expression -> NAME .)
-    *               reduce using rule 19 (expression -> NAME .)
-    /               reduce using rule 19 (expression -> NAME .)
-    ^               reduce using rule 19 (expression -> NAME .)
-    SEMICOLON       reduce using rule 19 (expression -> NAME .)
-    )               reduce using rule 19 (expression -> NAME .)
-
-
-state 12
-
-    (7) simple_statement -> NAME = expression .
+    (20) simple_statement -> SAY expression .
     (8) expression -> expression . + expression
     (9) expression -> expression . - expression
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
-    SEMICOLON       reduce using rule 7 (simple_statement -> NAME = expression .)
-    +               shift and go to state 19
-    -               shift and go to state 20
-    *               shift and go to state 21
-    /               shift and go to state 22
-    ^               shift and go to state 23
+    SEMICOLON       reduce using rule 20 (simple_statement -> SAY expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
 
 
-state 13
+state 23
 
     (14) expression -> + . expression
     (8) expression -> . expression + expression
@@ -226,18 +535,22 @@ state 13
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 24
+    expression                     shift and go to state 49
 
-state 14
+state 24
 
     (13) expression -> - . expression
     (8) expression -> . expression + expression
@@ -252,18 +565,22 @@ state 14
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 25
+    expression                     shift and go to state 50
 
-state 15
+state 25
 
     (15) expression -> ( . expression )
     (8) expression -> . expression + expression
@@ -278,18 +595,22 @@ state 15
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 26
+    expression                     shift and go to state 51
 
-state 16
+state 26
 
     (16) expression -> NUMBER .
 
@@ -298,11 +619,14 @@ state 16
     *               reduce using rule 16 (expression -> NUMBER .)
     /               reduce using rule 16 (expression -> NUMBER .)
     ^               reduce using rule 16 (expression -> NUMBER .)
+    AND             reduce using rule 16 (expression -> NUMBER .)
+    OR              reduce using rule 16 (expression -> NUMBER .)
     SEMICOLON       reduce using rule 16 (expression -> NUMBER .)
+    :               reduce using rule 16 (expression -> NUMBER .)
     )               reduce using rule 16 (expression -> NUMBER .)
 
 
-state 17
+state 27
 
     (17) expression -> DQ_STRING .
 
@@ -311,11 +635,14 @@ state 17
     *               reduce using rule 17 (expression -> DQ_STRING .)
     /               reduce using rule 17 (expression -> DQ_STRING .)
     ^               reduce using rule 17 (expression -> DQ_STRING .)
+    AND             reduce using rule 17 (expression -> DQ_STRING .)
+    OR              reduce using rule 17 (expression -> DQ_STRING .)
     SEMICOLON       reduce using rule 17 (expression -> DQ_STRING .)
+    :               reduce using rule 17 (expression -> DQ_STRING .)
     )               reduce using rule 17 (expression -> DQ_STRING .)
 
 
-state 18
+state 28
 
     (18) expression -> SQ_STRING .
 
@@ -324,11 +651,197 @@ state 18
     *               reduce using rule 18 (expression -> SQ_STRING .)
     /               reduce using rule 18 (expression -> SQ_STRING .)
     ^               reduce using rule 18 (expression -> SQ_STRING .)
+    AND             reduce using rule 18 (expression -> SQ_STRING .)
+    OR              reduce using rule 18 (expression -> SQ_STRING .)
     SEMICOLON       reduce using rule 18 (expression -> SQ_STRING .)
+    :               reduce using rule 18 (expression -> SQ_STRING .)
     )               reduce using rule 18 (expression -> SQ_STRING .)
 
 
-state 19
+state 29
+
+    (19) expression -> NAME .
+
+    +               reduce using rule 19 (expression -> NAME .)
+    -               reduce using rule 19 (expression -> NAME .)
+    *               reduce using rule 19 (expression -> NAME .)
+    /               reduce using rule 19 (expression -> NAME .)
+    ^               reduce using rule 19 (expression -> NAME .)
+    AND             reduce using rule 19 (expression -> NAME .)
+    OR              reduce using rule 19 (expression -> NAME .)
+    SEMICOLON       reduce using rule 19 (expression -> NAME .)
+    :               reduce using rule 19 (expression -> NAME .)
+    )               reduce using rule 19 (expression -> NAME .)
+
+
+state 30
+
+    (30) expression -> NOT . expression
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 52
+
+state 31
+
+    (21) simple_statement -> SET NAME . = expression
+
+    =               shift and go to state 53
+
+
+state 32
+
+    (22) simple_statement -> INPUT NAME .
+
+    SEMICOLON       reduce using rule 22 (simple_statement -> INPUT NAME .)
+
+
+state 33
+
+    (23) simple_statement -> IF expression . : suite ELSE : suite
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+    :               shift and go to state 54
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+
+state 34
+
+    (24) simple_statement -> WHILE expression . : suite
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+    :               shift and go to state 55
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+
+state 35
+
+    (26) simple_statement -> FUNCTION NAME . ( parameters ) : suite
+
+    (               shift and go to state 56
+
+
+state 36
+
+    (27) simple_statement -> RETURN expression .
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+    SEMICOLON       reduce using rule 27 (simple_statement -> RETURN expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+
+state 37
+
+    (31) simple_statement -> CLASS NAME . : suite
+
+    :               shift and go to state 57
+
+
+state 38
+
+    (32) simple_statement -> OBJECT NAME . = NAME ( )
+
+    =               shift and go to state 58
+
+
+state 39
+
+    (33) simple_statement -> CONSTRUCTOR ( . parameters ) : suite
+    (25) parameters -> . NAME
+
+    NAME            shift and go to state 60
+
+    parameters                     shift and go to state 59
+
+state 40
+
+    (34) simple_statement -> TRY : . suite catch finally
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 61
+
+state 41
+
+    (7) simple_statement -> NAME = expression .
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+    SEMICOLON       reduce using rule 7 (simple_statement -> NAME = expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+
+state 42
 
     (8) expression -> expression + . expression
     (8) expression -> . expression + expression
@@ -343,18 +856,22 @@ state 19
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 27
+    expression                     shift and go to state 63
 
-state 20
+state 43
 
     (9) expression -> expression - . expression
     (8) expression -> . expression + expression
@@ -369,18 +886,22 @@ state 20
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 28
+    expression                     shift and go to state 64
 
-state 21
+state 44
 
     (10) expression -> expression * . expression
     (8) expression -> . expression + expression
@@ -395,18 +916,22 @@ state 21
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 29
+    expression                     shift and go to state 65
 
-state 22
+state 45
 
     (11) expression -> expression / . expression
     (8) expression -> . expression + expression
@@ -421,18 +946,22 @@ state 22
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 30
+    expression                     shift and go to state 66
 
-state 23
+state 46
 
     (12) expression -> expression ^ . expression
     (8) expression -> . expression + expression
@@ -447,18 +976,82 @@ state 23
     (17) expression -> . DQ_STRING
     (18) expression -> . SQ_STRING
     (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
 
-    -               shift and go to state 14
-    +               shift and go to state 13
-    (               shift and go to state 15
-    NUMBER          shift and go to state 16
-    DQ_STRING       shift and go to state 17
-    SQ_STRING       shift and go to state 18
-    NAME            shift and go to state 11
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
 
-    expression                     shift and go to state 31
+    expression                     shift and go to state 67
 
-state 24
+state 47
+
+    (28) expression -> expression AND . expression
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 68
+
+state 48
+
+    (29) expression -> expression OR . expression
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 69
+
+state 49
 
     (14) expression -> + expression .
     (8) expression -> expression . + expression
@@ -466,23 +1059,30 @@ state 24
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 14 (expression -> + expression .)
     -               reduce using rule 14 (expression -> + expression .)
     *               reduce using rule 14 (expression -> + expression .)
     /               reduce using rule 14 (expression -> + expression .)
     ^               reduce using rule 14 (expression -> + expression .)
+    AND             reduce using rule 14 (expression -> + expression .)
+    OR              reduce using rule 14 (expression -> + expression .)
     SEMICOLON       reduce using rule 14 (expression -> + expression .)
+    :               reduce using rule 14 (expression -> + expression .)
     )               reduce using rule 14 (expression -> + expression .)
 
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
-  ! *               [ shift and go to state 21 ]
-  ! /               [ shift and go to state 22 ]
-  ! ^               [ shift and go to state 23 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! *               [ shift and go to state 44 ]
+  ! /               [ shift and go to state 45 ]
+  ! ^               [ shift and go to state 46 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 25
+state 50
 
     (13) expression -> - expression .
     (8) expression -> expression . + expression
@@ -490,23 +1090,30 @@ state 25
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 13 (expression -> - expression .)
     -               reduce using rule 13 (expression -> - expression .)
     *               reduce using rule 13 (expression -> - expression .)
     /               reduce using rule 13 (expression -> - expression .)
     ^               reduce using rule 13 (expression -> - expression .)
+    AND             reduce using rule 13 (expression -> - expression .)
+    OR              reduce using rule 13 (expression -> - expression .)
     SEMICOLON       reduce using rule 13 (expression -> - expression .)
+    :               reduce using rule 13 (expression -> - expression .)
     )               reduce using rule 13 (expression -> - expression .)
 
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
-  ! *               [ shift and go to state 21 ]
-  ! /               [ shift and go to state 22 ]
-  ! ^               [ shift and go to state 23 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! *               [ shift and go to state 44 ]
+  ! /               [ shift and go to state 45 ]
+  ! ^               [ shift and go to state 46 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 26
+state 51
 
     (15) expression -> ( expression . )
     (8) expression -> expression . + expression
@@ -514,16 +1121,194 @@ state 26
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
-    )               shift and go to state 32
-    +               shift and go to state 19
-    -               shift and go to state 20
-    *               shift and go to state 21
-    /               shift and go to state 22
-    ^               shift and go to state 23
+    )               shift and go to state 70
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
 
 
-state 27
+state 52
+
+    (30) expression -> NOT expression .
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for ^ resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMICOLON       reduce using rule 30 (expression -> NOT expression .)
+    :               reduce using rule 30 (expression -> NOT expression .)
+    )               reduce using rule 30 (expression -> NOT expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+  ! +               [ reduce using rule 30 (expression -> NOT expression .) ]
+  ! -               [ reduce using rule 30 (expression -> NOT expression .) ]
+  ! *               [ reduce using rule 30 (expression -> NOT expression .) ]
+  ! /               [ reduce using rule 30 (expression -> NOT expression .) ]
+  ! ^               [ reduce using rule 30 (expression -> NOT expression .) ]
+  ! AND             [ reduce using rule 30 (expression -> NOT expression .) ]
+  ! OR              [ reduce using rule 30 (expression -> NOT expression .) ]
+
+
+state 53
+
+    (21) simple_statement -> SET NAME = . expression
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 71
+
+state 54
+
+    (23) simple_statement -> IF expression : . suite ELSE : suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 72
+
+state 55
+
+    (24) simple_statement -> WHILE expression : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 73
+
+state 56
+
+    (26) simple_statement -> FUNCTION NAME ( . parameters ) : suite
+    (25) parameters -> . NAME
+
+    NAME            shift and go to state 60
+
+    parameters                     shift and go to state 74
+
+state 57
+
+    (31) simple_statement -> CLASS NAME : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 75
+
+state 58
+
+    (32) simple_statement -> OBJECT NAME = . NAME ( )
+
+    NAME            shift and go to state 76
+
+
+state 59
+
+    (33) simple_statement -> CONSTRUCTOR ( parameters . ) : suite
+
+    )               shift and go to state 77
+
+
+state 60
+
+    (25) parameters -> NAME .
+
+    )               reduce using rule 25 (parameters -> NAME .)
+
+
+state 61
+
+    (34) simple_statement -> TRY : suite . catch finally
+    (35) catch -> . CATCH expression : suite
+
+    CATCH           shift and go to state 79
+
+    catch                          shift and go to state 78
+
+state 62
+
+    (37) suite -> ( . statement_list )
+    (2) statement_list -> . statement_list statement
+    (3) statement_list -> . statement
+    (4) statement -> . simple_statement SEMICOLON
+    (5) statement -> . SEMICOLON
+    (6) simple_statement -> . PASS
+    (7) simple_statement -> . NAME = expression
+    (20) simple_statement -> . SAY expression
+    (21) simple_statement -> . SET NAME = expression
+    (22) simple_statement -> . INPUT NAME
+    (23) simple_statement -> . IF expression : suite ELSE : suite
+    (24) simple_statement -> . WHILE expression : suite
+    (26) simple_statement -> . FUNCTION NAME ( parameters ) : suite
+    (27) simple_statement -> . RETURN expression
+    (31) simple_statement -> . CLASS NAME : suite
+    (32) simple_statement -> . OBJECT NAME = NAME ( )
+    (33) simple_statement -> . CONSTRUCTOR ( parameters ) : suite
+    (34) simple_statement -> . TRY : suite catch finally
+
+    SEMICOLON       shift and go to state 5
+    PASS            shift and go to state 6
+    NAME            shift and go to state 7
+    SAY             shift and go to state 8
+    SET             shift and go to state 9
+    INPUT           shift and go to state 10
+    IF              shift and go to state 11
+    WHILE           shift and go to state 12
+    FUNCTION        shift and go to state 13
+    RETURN          shift and go to state 14
+    CLASS           shift and go to state 15
+    OBJECT          shift and go to state 16
+    CONSTRUCTOR     shift and go to state 17
+    TRY             shift and go to state 18
+
+    statement_list                 shift and go to state 80
+    statement                      shift and go to state 3
+    simple_statement               shift and go to state 4
+
+state 63
 
     (8) expression -> expression + expression .
     (8) expression -> expression . + expression
@@ -531,23 +1316,30 @@ state 27
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 8 (expression -> expression + expression .)
     -               reduce using rule 8 (expression -> expression + expression .)
+    AND             reduce using rule 8 (expression -> expression + expression .)
+    OR              reduce using rule 8 (expression -> expression + expression .)
     SEMICOLON       reduce using rule 8 (expression -> expression + expression .)
+    :               reduce using rule 8 (expression -> expression + expression .)
     )               reduce using rule 8 (expression -> expression + expression .)
-    *               shift and go to state 21
-    /               shift and go to state 22
-    ^               shift and go to state 23
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
 
   ! *               [ reduce using rule 8 (expression -> expression + expression .) ]
   ! /               [ reduce using rule 8 (expression -> expression + expression .) ]
   ! ^               [ reduce using rule 8 (expression -> expression + expression .) ]
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 28
+state 64
 
     (9) expression -> expression - expression .
     (8) expression -> expression . + expression
@@ -555,23 +1347,30 @@ state 28
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 9 (expression -> expression - expression .)
     -               reduce using rule 9 (expression -> expression - expression .)
+    AND             reduce using rule 9 (expression -> expression - expression .)
+    OR              reduce using rule 9 (expression -> expression - expression .)
     SEMICOLON       reduce using rule 9 (expression -> expression - expression .)
+    :               reduce using rule 9 (expression -> expression - expression .)
     )               reduce using rule 9 (expression -> expression - expression .)
-    *               shift and go to state 21
-    /               shift and go to state 22
-    ^               shift and go to state 23
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
 
   ! *               [ reduce using rule 9 (expression -> expression - expression .) ]
   ! /               [ reduce using rule 9 (expression -> expression - expression .) ]
   ! ^               [ reduce using rule 9 (expression -> expression - expression .) ]
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 29
+state 65
 
     (10) expression -> expression * expression .
     (8) expression -> expression . + expression
@@ -579,23 +1378,30 @@ state 29
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 10 (expression -> expression * expression .)
     -               reduce using rule 10 (expression -> expression * expression .)
     *               reduce using rule 10 (expression -> expression * expression .)
     /               reduce using rule 10 (expression -> expression * expression .)
+    AND             reduce using rule 10 (expression -> expression * expression .)
+    OR              reduce using rule 10 (expression -> expression * expression .)
     SEMICOLON       reduce using rule 10 (expression -> expression * expression .)
+    :               reduce using rule 10 (expression -> expression * expression .)
     )               reduce using rule 10 (expression -> expression * expression .)
-    ^               shift and go to state 23
+    ^               shift and go to state 46
 
   ! ^               [ reduce using rule 10 (expression -> expression * expression .) ]
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
-  ! *               [ shift and go to state 21 ]
-  ! /               [ shift and go to state 22 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! *               [ shift and go to state 44 ]
+  ! /               [ shift and go to state 45 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 30
+state 66
 
     (11) expression -> expression / expression .
     (8) expression -> expression . + expression
@@ -603,23 +1409,30 @@ state 30
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 11 (expression -> expression / expression .)
     -               reduce using rule 11 (expression -> expression / expression .)
     *               reduce using rule 11 (expression -> expression / expression .)
     /               reduce using rule 11 (expression -> expression / expression .)
+    AND             reduce using rule 11 (expression -> expression / expression .)
+    OR              reduce using rule 11 (expression -> expression / expression .)
     SEMICOLON       reduce using rule 11 (expression -> expression / expression .)
+    :               reduce using rule 11 (expression -> expression / expression .)
     )               reduce using rule 11 (expression -> expression / expression .)
-    ^               shift and go to state 23
+    ^               shift and go to state 46
 
   ! ^               [ reduce using rule 11 (expression -> expression / expression .) ]
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
-  ! *               [ shift and go to state 21 ]
-  ! /               [ shift and go to state 22 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! *               [ shift and go to state 44 ]
+  ! /               [ shift and go to state 45 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 31
+state 67
 
     (12) expression -> expression ^ expression .
     (8) expression -> expression . + expression
@@ -627,23 +1440,106 @@ state 31
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
     (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
 
     +               reduce using rule 12 (expression -> expression ^ expression .)
     -               reduce using rule 12 (expression -> expression ^ expression .)
     *               reduce using rule 12 (expression -> expression ^ expression .)
     /               reduce using rule 12 (expression -> expression ^ expression .)
     ^               reduce using rule 12 (expression -> expression ^ expression .)
+    AND             reduce using rule 12 (expression -> expression ^ expression .)
+    OR              reduce using rule 12 (expression -> expression ^ expression .)
     SEMICOLON       reduce using rule 12 (expression -> expression ^ expression .)
+    :               reduce using rule 12 (expression -> expression ^ expression .)
     )               reduce using rule 12 (expression -> expression ^ expression .)
 
-  ! +               [ shift and go to state 19 ]
-  ! -               [ shift and go to state 20 ]
-  ! *               [ shift and go to state 21 ]
-  ! /               [ shift and go to state 22 ]
-  ! ^               [ shift and go to state 23 ]
+  ! +               [ shift and go to state 42 ]
+  ! -               [ shift and go to state 43 ]
+  ! *               [ shift and go to state 44 ]
+  ! /               [ shift and go to state 45 ]
+  ! ^               [ shift and go to state 46 ]
+  ! AND             [ shift and go to state 47 ]
+  ! OR              [ shift and go to state 48 ]
 
 
-state 32
+state 68
+
+    (28) expression -> expression AND expression .
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for ^ resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMICOLON       reduce using rule 28 (expression -> expression AND expression .)
+    :               reduce using rule 28 (expression -> expression AND expression .)
+    )               reduce using rule 28 (expression -> expression AND expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+  ! +               [ reduce using rule 28 (expression -> expression AND expression .) ]
+  ! -               [ reduce using rule 28 (expression -> expression AND expression .) ]
+  ! *               [ reduce using rule 28 (expression -> expression AND expression .) ]
+  ! /               [ reduce using rule 28 (expression -> expression AND expression .) ]
+  ! ^               [ reduce using rule 28 (expression -> expression AND expression .) ]
+  ! AND             [ reduce using rule 28 (expression -> expression AND expression .) ]
+  ! OR              [ reduce using rule 28 (expression -> expression AND expression .) ]
+
+
+state 69
+
+    (29) expression -> expression OR expression .
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+  ! shift/reduce conflict for + resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for ^ resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMICOLON       reduce using rule 29 (expression -> expression OR expression .)
+    :               reduce using rule 29 (expression -> expression OR expression .)
+    )               reduce using rule 29 (expression -> expression OR expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+  ! +               [ reduce using rule 29 (expression -> expression OR expression .) ]
+  ! -               [ reduce using rule 29 (expression -> expression OR expression .) ]
+  ! *               [ reduce using rule 29 (expression -> expression OR expression .) ]
+  ! /               [ reduce using rule 29 (expression -> expression OR expression .) ]
+  ! ^               [ reduce using rule 29 (expression -> expression OR expression .) ]
+  ! AND             [ reduce using rule 29 (expression -> expression OR expression .) ]
+  ! OR              [ reduce using rule 29 (expression -> expression OR expression .) ]
+
+
+state 70
 
     (15) expression -> ( expression ) .
 
@@ -652,6 +1548,327 @@ state 32
     *               reduce using rule 15 (expression -> ( expression ) .)
     /               reduce using rule 15 (expression -> ( expression ) .)
     ^               reduce using rule 15 (expression -> ( expression ) .)
+    AND             reduce using rule 15 (expression -> ( expression ) .)
+    OR              reduce using rule 15 (expression -> ( expression ) .)
     SEMICOLON       reduce using rule 15 (expression -> ( expression ) .)
+    :               reduce using rule 15 (expression -> ( expression ) .)
     )               reduce using rule 15 (expression -> ( expression ) .)
 
+
+state 71
+
+    (21) simple_statement -> SET NAME = expression .
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+    SEMICOLON       reduce using rule 21 (simple_statement -> SET NAME = expression .)
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+
+state 72
+
+    (23) simple_statement -> IF expression : suite . ELSE : suite
+
+    ELSE            shift and go to state 81
+
+
+state 73
+
+    (24) simple_statement -> WHILE expression : suite .
+
+    SEMICOLON       reduce using rule 24 (simple_statement -> WHILE expression : suite .)
+
+
+state 74
+
+    (26) simple_statement -> FUNCTION NAME ( parameters . ) : suite
+
+    )               shift and go to state 82
+
+
+state 75
+
+    (31) simple_statement -> CLASS NAME : suite .
+
+    SEMICOLON       reduce using rule 31 (simple_statement -> CLASS NAME : suite .)
+
+
+state 76
+
+    (32) simple_statement -> OBJECT NAME = NAME . ( )
+
+    (               shift and go to state 83
+
+
+state 77
+
+    (33) simple_statement -> CONSTRUCTOR ( parameters ) . : suite
+
+    :               shift and go to state 84
+
+
+state 78
+
+    (34) simple_statement -> TRY : suite catch . finally
+    (36) finally -> . FINALLY : suite
+
+    FINALLY         shift and go to state 86
+
+    finally                        shift and go to state 85
+
+state 79
+
+    (35) catch -> CATCH . expression : suite
+    (8) expression -> . expression + expression
+    (9) expression -> . expression - expression
+    (10) expression -> . expression * expression
+    (11) expression -> . expression / expression
+    (12) expression -> . expression ^ expression
+    (13) expression -> . - expression
+    (14) expression -> . + expression
+    (15) expression -> . ( expression )
+    (16) expression -> . NUMBER
+    (17) expression -> . DQ_STRING
+    (18) expression -> . SQ_STRING
+    (19) expression -> . NAME
+    (28) expression -> . expression AND expression
+    (29) expression -> . expression OR expression
+    (30) expression -> . NOT expression
+
+    -               shift and go to state 24
+    +               shift and go to state 23
+    (               shift and go to state 25
+    NUMBER          shift and go to state 26
+    DQ_STRING       shift and go to state 27
+    SQ_STRING       shift and go to state 28
+    NAME            shift and go to state 29
+    NOT             shift and go to state 30
+
+    expression                     shift and go to state 87
+
+state 80
+
+    (37) suite -> ( statement_list . )
+    (2) statement_list -> statement_list . statement
+    (4) statement -> . simple_statement SEMICOLON
+    (5) statement -> . SEMICOLON
+    (6) simple_statement -> . PASS
+    (7) simple_statement -> . NAME = expression
+    (20) simple_statement -> . SAY expression
+    (21) simple_statement -> . SET NAME = expression
+    (22) simple_statement -> . INPUT NAME
+    (23) simple_statement -> . IF expression : suite ELSE : suite
+    (24) simple_statement -> . WHILE expression : suite
+    (26) simple_statement -> . FUNCTION NAME ( parameters ) : suite
+    (27) simple_statement -> . RETURN expression
+    (31) simple_statement -> . CLASS NAME : suite
+    (32) simple_statement -> . OBJECT NAME = NAME ( )
+    (33) simple_statement -> . CONSTRUCTOR ( parameters ) : suite
+    (34) simple_statement -> . TRY : suite catch finally
+
+    )               shift and go to state 88
+    SEMICOLON       shift and go to state 5
+    PASS            shift and go to state 6
+    NAME            shift and go to state 7
+    SAY             shift and go to state 8
+    SET             shift and go to state 9
+    INPUT           shift and go to state 10
+    IF              shift and go to state 11
+    WHILE           shift and go to state 12
+    FUNCTION        shift and go to state 13
+    RETURN          shift and go to state 14
+    CLASS           shift and go to state 15
+    OBJECT          shift and go to state 16
+    CONSTRUCTOR     shift and go to state 17
+    TRY             shift and go to state 18
+
+    statement                      shift and go to state 19
+    simple_statement               shift and go to state 4
+
+state 81
+
+    (23) simple_statement -> IF expression : suite ELSE . : suite
+
+    :               shift and go to state 89
+
+
+state 82
+
+    (26) simple_statement -> FUNCTION NAME ( parameters ) . : suite
+
+    :               shift and go to state 90
+
+
+state 83
+
+    (32) simple_statement -> OBJECT NAME = NAME ( . )
+
+    )               shift and go to state 91
+
+
+state 84
+
+    (33) simple_statement -> CONSTRUCTOR ( parameters ) : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 92
+
+state 85
+
+    (34) simple_statement -> TRY : suite catch finally .
+
+    SEMICOLON       reduce using rule 34 (simple_statement -> TRY : suite catch finally .)
+
+
+state 86
+
+    (36) finally -> FINALLY . : suite
+
+    :               shift and go to state 93
+
+
+state 87
+
+    (35) catch -> CATCH expression . : suite
+    (8) expression -> expression . + expression
+    (9) expression -> expression . - expression
+    (10) expression -> expression . * expression
+    (11) expression -> expression . / expression
+    (12) expression -> expression . ^ expression
+    (28) expression -> expression . AND expression
+    (29) expression -> expression . OR expression
+
+    :               shift and go to state 94
+    +               shift and go to state 42
+    -               shift and go to state 43
+    *               shift and go to state 44
+    /               shift and go to state 45
+    ^               shift and go to state 46
+    AND             shift and go to state 47
+    OR              shift and go to state 48
+
+
+state 88
+
+    (37) suite -> ( statement_list ) .
+
+    CATCH           reduce using rule 37 (suite -> ( statement_list ) .)
+    ELSE            reduce using rule 37 (suite -> ( statement_list ) .)
+    SEMICOLON       reduce using rule 37 (suite -> ( statement_list ) .)
+    FINALLY         reduce using rule 37 (suite -> ( statement_list ) .)
+
+
+state 89
+
+    (23) simple_statement -> IF expression : suite ELSE : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 95
+
+state 90
+
+    (26) simple_statement -> FUNCTION NAME ( parameters ) : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 96
+
+state 91
+
+    (32) simple_statement -> OBJECT NAME = NAME ( ) .
+
+    SEMICOLON       reduce using rule 32 (simple_statement -> OBJECT NAME = NAME ( ) .)
+
+
+state 92
+
+    (33) simple_statement -> CONSTRUCTOR ( parameters ) : suite .
+
+    SEMICOLON       reduce using rule 33 (simple_statement -> CONSTRUCTOR ( parameters ) : suite .)
+
+
+state 93
+
+    (36) finally -> FINALLY : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 97
+
+state 94
+
+    (35) catch -> CATCH expression : . suite
+    (37) suite -> . ( statement_list )
+
+    (               shift and go to state 62
+
+    suite                          shift and go to state 98
+
+state 95
+
+    (23) simple_statement -> IF expression : suite ELSE : suite .
+
+    SEMICOLON       reduce using rule 23 (simple_statement -> IF expression : suite ELSE : suite .)
+
+
+state 96
+
+    (26) simple_statement -> FUNCTION NAME ( parameters ) : suite .
+
+    SEMICOLON       reduce using rule 26 (simple_statement -> FUNCTION NAME ( parameters ) : suite .)
+
+
+state 97
+
+    (36) finally -> FINALLY : suite .
+
+    SEMICOLON       reduce using rule 36 (finally -> FINALLY : suite .)
+
+
+state 98
+
+    (35) catch -> CATCH expression : suite .
+
+    FINALLY         reduce using rule 35 (catch -> CATCH expression : suite .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for + in state 52 resolved as shift
+WARNING: shift/reduce conflict for - in state 52 resolved as shift
+WARNING: shift/reduce conflict for * in state 52 resolved as shift
+WARNING: shift/reduce conflict for / in state 52 resolved as shift
+WARNING: shift/reduce conflict for ^ in state 52 resolved as shift
+WARNING: shift/reduce conflict for AND in state 52 resolved as shift
+WARNING: shift/reduce conflict for OR in state 52 resolved as shift
+WARNING: shift/reduce conflict for + in state 68 resolved as shift
+WARNING: shift/reduce conflict for - in state 68 resolved as shift
+WARNING: shift/reduce conflict for * in state 68 resolved as shift
+WARNING: shift/reduce conflict for / in state 68 resolved as shift
+WARNING: shift/reduce conflict for ^ in state 68 resolved as shift
+WARNING: shift/reduce conflict for AND in state 68 resolved as shift
+WARNING: shift/reduce conflict for OR in state 68 resolved as shift
+WARNING: shift/reduce conflict for + in state 69 resolved as shift
+WARNING: shift/reduce conflict for - in state 69 resolved as shift
+WARNING: shift/reduce conflict for * in state 69 resolved as shift
+WARNING: shift/reduce conflict for / in state 69 resolved as shift
+WARNING: shift/reduce conflict for ^ in state 69 resolved as shift
+WARNING: shift/reduce conflict for AND in state 69 resolved as shift
+WARNING: shift/reduce conflict for OR in state 69 resolved as shift
