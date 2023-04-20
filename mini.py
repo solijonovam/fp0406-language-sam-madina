@@ -69,6 +69,146 @@ def t_NAME(t):
     return t
 
 
+def t_PASS(t):
+    r'pass'
+    t.type = reserved.get(t.value, 'PASS')
+    return t
+
+
+def t_SAY(t):
+    r'say'
+    t.type = reserved.get(t.value, 'SAY')
+    return t
+
+
+def t_SET(t):
+    r'set'
+    t.type = reserved.get(t.value, 'SET')
+    return t
+
+
+def t_INPUT(t):
+    r'input'
+    t.type = reserved.get(t.value, 'INPUT')
+    return t
+
+
+def t_IF(t):
+    r'if'
+    t.type = reserved.get(t.value, 'IF')
+    return t
+
+
+def t_ELSE(t):
+    r'else'
+    t.type = reserved.get(t.value, 'ELSE')
+    return t
+
+
+def t_WHILE(t):
+    r'while'
+    t.type = reserved.get(t.value, 'WHILE')
+    return t
+
+
+def t_END(t):
+    r'end'
+    t.type = reserved.get(t.value, 'END')
+    return t
+
+
+def t_TRUE(t):
+    r'true'
+    t.type = reserved.get(t.value, 'TRUE')
+    return t
+
+
+def t_FALSE(t):
+    r'false'
+    t.type = reserved.get(t.value, 'FALSE')
+    return t
+
+
+def t_AND(t):
+    r'and'
+    t.type = reserved.get(t.value, 'AND')
+    return t
+
+
+def t_OR(t):
+    r'or'
+    t.type = reserved.get(t.value, 'OR')
+    return t
+
+
+def t_NOT(t):
+    r'not'
+    t.type = reserved.get(t.value, 'NOT')
+    return t
+
+
+def t_FUNCTION(t):
+    r'function'
+    t.type = reserved.get(t.value, 'FUNCTION')
+    return t
+
+def t_RETURN(t):
+    r'return'
+    t.type = reserved.get(t.value, 'RETURN')
+    return t
+
+
+def t_CLASS(t):
+    r'class'
+    t.type = reserved.get(t.value, 'CLASS')
+    return t
+
+
+def t_OBJECT(t):
+    r'object'
+    t.type = reserved.get(t.value, 'OBJECT')
+    return t
+
+
+def t_CONSTRUCTOR(t):
+    r'constructor'
+    t.type = reserved.get(t.value, 'CONSTRUCTOR')
+    return t
+
+def t_TRY(t):
+    r'try'
+    t.type = reserved.get(t.value, 'TRY')
+    return t
+
+def t_CATCH(t):
+    r'catch'
+    t.type = reserved.get(t.value, 'CATCH')
+    return t
+
+
+def t_FINALLY(t):
+    r'finally'
+    t.type = reserved.get(t.value, 'FINALLY')
+    return t
+
+
+def t_SUITE(t):
+    r'suite'
+    t.type = reserved.get(t.value, 'SUITE')
+    return t
+
+
+def t_PARAMETRS(t):
+    r'parameters'
+    t.type = reserved.get(t.value, 'PARAMETERS')
+    return t
+
+
+
+
+
+
+
 # Helper function for NUMBER token
 def str_to_num(s):
     ans = 0
