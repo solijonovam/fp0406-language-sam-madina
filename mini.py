@@ -75,10 +75,10 @@ def t_PASS(t):
     return t
 
 
-def t_SAY(t):
-    r'say'
-    t.type = reserved.get(t.value, 'SAY')
-    return t
+# def t_SAY(t):
+#     r'say'
+#     t.type = reserved.get(t.value, 'SAY')
+#     return t
 
 
 def t_SET(t):
@@ -404,8 +404,8 @@ def p_expression_name(p):
 
 
 def p_simple_statement_say(p):
-    """simple_statement : SAY expression"""
-    p[0] = ASTNODE("say", children=[p[2]])
+    """simple_statement : SAY '(' expression ')'"""
+    p[0] = ASTNODE("say", children=[p[3]])
 
 
 def p_simple_statement_set(p):
@@ -508,9 +508,10 @@ if __name__ == "__main__":
         // top of the program
         a = 3.174; b = 5; pass;
         // comment by itself
-        c = 7 
-            + a; // multiline assignment with expression :-)
-        d = 2 * (a + b) * c; e = -d; ; ;;
+        //c = 7 + a; // multiline assignment with expression :-)
+        //d = 2 * (a + b) * c; e = -d; ; ;;
+        testing = "we were here"
+        say(a);
     """
 
     root = None

@@ -63,6 +63,10 @@ class MiniAST(ASTPROC):
                     return
             elif node.name == "pass":
                 pass
+            elif node.name == "say":
+                process_node(node.children[0])
+                self.stack.check_underflow(1)
+                print(self.stack.pop())
             else:
                 error_message = "Undefined node name: {}".format(node.name)
                 raise SyntaxError(error_message)
