@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'programleft+-left*/left^rightUMINUSUPOSITIVEDQ_STRING NAME NUMBER PASS SAY SEMICOLON SET SQ_STRINGprogram : statement_liststatement_list : statement_list statementstatement_list : statementstatement : simple_statement SEMICOLONstatement : SEMICOLONsimple_statement : PASSsimple_statement : NAME "=" expressionexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expression\n                  | expression \'^\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'+\' expression %prec UPOSITIVEexpression : \'(\' expression \')\'expression : NUMBERexpression : DQ_STRINGexpression : SQ_STRINGexpression : NAMEsimple_statement : SAY expressionsimple_statement : SET NAME "=" expression'
+_lr_signature = 'programleft+-left*/left^rightUMINUSUPOSITIVEDQ_STRING NAME NUMBER PASS SAY SEMICOLON SQ_STRINGprogram : statement_liststatement_list : statement_list statementstatement_list : statementstatement : simple_statement SEMICOLONstatement : SEMICOLONsimple_statement : PASSsimple_statement : NAME "=" expressionsimple_statement : SAY \'(\' expression \')\'expression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expression\n                  | expression \'^\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'+\' expression %prec UPOSITIVEexpression : \'(\' expression \')\'expression : NUMBERexpression : DQ_STRINGexpression : SQ_STRINGexpression : NAME'
     
-_lr_action_items = {'SEMICOLON':([0,2,3,4,5,6,10,11,13,17,18,19,20,22,28,29,32,33,34,35,36,37,38,],[5,5,-3,11,-5,-6,-2,-4,-20,-16,-17,-18,-19,-7,-14,-13,-8,-9,-10,-11,-12,-15,-21,]),'PASS':([0,2,3,5,10,11,],[6,6,-3,-5,-2,-4,]),'NAME':([0,2,3,5,8,9,10,11,12,14,15,16,23,24,25,26,27,31,],[7,7,-3,-5,20,21,-2,-4,20,20,20,20,20,20,20,20,20,20,]),'SAY':([0,2,3,5,10,11,],[8,8,-3,-5,-2,-4,]),'SET':([0,2,3,5,10,11,],[9,9,-3,-5,-2,-4,]),'$end':([1,2,3,5,10,11,],[0,-1,-3,-5,-2,-4,]),'=':([7,21,],[12,31,]),'-':([8,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,],[15,15,24,15,15,15,-16,-17,-18,-19,24,15,15,15,15,15,-14,-13,24,15,-8,-9,-10,-11,-12,-15,24,]),'+':([8,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,],[14,14,23,14,14,14,-16,-17,-18,-19,23,14,14,14,14,14,-14,-13,23,14,-8,-9,-10,-11,-12,-15,23,]),'(':([8,12,14,15,16,23,24,25,26,27,31,],[16,16,16,16,16,16,16,16,16,16,16,]),'NUMBER':([8,12,14,15,16,23,24,25,26,27,31,],[17,17,17,17,17,17,17,17,17,17,17,]),'DQ_STRING':([8,12,14,15,16,23,24,25,26,27,31,],[18,18,18,18,18,18,18,18,18,18,18,]),'SQ_STRING':([8,12,14,15,16,23,24,25,26,27,31,],[19,19,19,19,19,19,19,19,19,19,19,]),'*':([13,17,18,19,20,22,28,29,30,32,33,34,35,36,37,38,],[25,-16,-17,-18,-19,25,-14,-13,25,25,25,-10,-11,-12,-15,25,]),'/':([13,17,18,19,20,22,28,29,30,32,33,34,35,36,37,38,],[26,-16,-17,-18,-19,26,-14,-13,26,26,26,-10,-11,-12,-15,26,]),'^':([13,17,18,19,20,22,28,29,30,32,33,34,35,36,37,38,],[27,-16,-17,-18,-19,27,-14,-13,27,27,27,27,27,-12,-15,27,]),')':([17,18,19,20,28,29,30,32,33,34,35,36,37,],[-16,-17,-18,-19,-14,-13,37,-8,-9,-10,-11,-12,-15,]),}
+_lr_action_items = {'SEMICOLON':([0,2,3,4,5,6,9,10,13,14,18,19,20,27,28,30,31,32,33,34,35,36,],[5,5,-3,10,-5,-6,-2,-4,-20,-7,-17,-18,-19,-15,-14,-8,-9,-10,-11,-12,-13,-16,]),'PASS':([0,2,3,5,9,10,],[6,6,-3,-5,-2,-4,]),'NAME':([0,2,3,5,9,10,11,12,15,16,17,22,23,24,25,26,],[7,7,-3,-5,-2,-4,13,13,13,13,13,13,13,13,13,13,]),'SAY':([0,2,3,5,9,10,],[8,8,-3,-5,-2,-4,]),'$end':([1,2,3,5,9,10,],[0,-1,-3,-5,-2,-4,]),'=':([7,],[11,]),'(':([8,11,12,15,16,17,22,23,24,25,26,],[12,17,17,17,17,17,17,17,17,17,17,]),'-':([11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,33,34,35,36,],[16,16,-20,23,16,16,16,-17,-18,-19,23,16,16,16,16,16,-15,-14,23,-9,-10,-11,-12,-13,-16,]),'+':([11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,33,34,35,36,],[15,15,-20,22,15,15,15,-17,-18,-19,22,15,15,15,15,15,-15,-14,22,-9,-10,-11,-12,-13,-16,]),'NUMBER':([11,12,15,16,17,22,23,24,25,26,],[18,18,18,18,18,18,18,18,18,18,]),'DQ_STRING':([11,12,15,16,17,22,23,24,25,26,],[19,19,19,19,19,19,19,19,19,19,]),'SQ_STRING':([11,12,15,16,17,22,23,24,25,26,],[20,20,20,20,20,20,20,20,20,20,]),'*':([13,14,18,19,20,21,27,28,29,31,32,33,34,35,36,],[-20,24,-17,-18,-19,24,-15,-14,24,24,24,-11,-12,-13,-16,]),'/':([13,14,18,19,20,21,27,28,29,31,32,33,34,35,36,],[-20,25,-17,-18,-19,25,-15,-14,25,25,25,-11,-12,-13,-16,]),'^':([13,14,18,19,20,21,27,28,29,31,32,33,34,35,36,],[-20,26,-17,-18,-19,26,-15,-14,26,26,26,26,26,-13,-16,]),')':([13,18,19,20,21,27,28,29,31,32,33,34,35,36,],[-20,-17,-18,-19,30,-15,-14,36,-9,-10,-11,-12,-13,-16,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'statement_list':([0,],[2,]),'statement':([0,2,],[3,10,]),'simple_statement':([0,2,],[4,4,]),'expression':([8,12,14,15,16,23,24,25,26,27,31,],[13,22,28,29,30,32,33,34,35,36,38,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statement_list':([0,],[2,]),'statement':([0,2,],[3,9,]),'simple_statement':([0,2,],[4,4,]),'expression':([11,12,15,16,17,22,23,24,25,26,],[14,21,27,28,29,31,32,33,34,35,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,25 +27,24 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statement_list','program',1,'p_program','mini.py',175),
-  ('statement_list -> statement_list statement','statement_list',2,'p_statement_list2','mini.py',181),
-  ('statement_list -> statement','statement_list',1,'p_statement_list','mini.py',186),
-  ('statement -> simple_statement SEMICOLON','statement',2,'p_statement_no_comment','mini.py',196),
-  ('statement -> SEMICOLON','statement',1,'p_statement_no_code_no_comment','mini.py',201),
-  ('simple_statement -> PASS','simple_statement',1,'p_simple_statement_pass','mini.py',207),
-  ('simple_statement -> NAME = expression','simple_statement',3,'p_simple_statement_assign','mini.py',212),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','mini.py',218),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','mini.py',219),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','mini.py',220),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','mini.py',221),
-  ('expression -> expression ^ expression','expression',3,'p_expression_binop','mini.py',222),
-  ('expression -> - expression','expression',2,'p_expression_uminus','mini.py',228),
-  ('expression -> + expression','expression',2,'p_expression_upositive','mini.py',234),
-  ('expression -> ( expression )','expression',3,'p_expression_group','mini.py',239),
-  ('expression -> NUMBER','expression',1,'p_expression_number','mini.py',244),
-  ('expression -> DQ_STRING','expression',1,'p_expression_dq_string','mini.py',249),
-  ('expression -> SQ_STRING','expression',1,'p_expression_sq_string','mini.py',254),
-  ('expression -> NAME','expression',1,'p_expression_name','mini.py',259),
-  ('simple_statement -> SAY expression','simple_statement',2,'p_simple_statement_say','mini.py',264),
-  ('simple_statement -> SET NAME = expression','simple_statement',4,'p_simple_statement_set','mini.py',269),
+  ('program -> statement_list','program',1,'p_program','mini.py',171),
+  ('statement_list -> statement_list statement','statement_list',2,'p_statement_list2','mini.py',177),
+  ('statement_list -> statement','statement_list',1,'p_statement_list','mini.py',182),
+  ('statement -> simple_statement SEMICOLON','statement',2,'p_statement_no_comment','mini.py',192),
+  ('statement -> SEMICOLON','statement',1,'p_statement_no_code_no_comment','mini.py',197),
+  ('simple_statement -> PASS','simple_statement',1,'p_simple_statement_pass','mini.py',203),
+  ('simple_statement -> NAME = expression','simple_statement',3,'p_simple_statement_assign','mini.py',208),
+  ('simple_statement -> SAY ( expression )','simple_statement',4,'p_simple_statement_say','mini.py',213),
+  ('expression -> expression + expression','expression',3,'p_expression_binop','mini.py',219),
+  ('expression -> expression - expression','expression',3,'p_expression_binop','mini.py',220),
+  ('expression -> expression * expression','expression',3,'p_expression_binop','mini.py',221),
+  ('expression -> expression / expression','expression',3,'p_expression_binop','mini.py',222),
+  ('expression -> expression ^ expression','expression',3,'p_expression_binop','mini.py',223),
+  ('expression -> - expression','expression',2,'p_expression_uminus','mini.py',229),
+  ('expression -> + expression','expression',2,'p_expression_upositive','mini.py',235),
+  ('expression -> ( expression )','expression',3,'p_expression_group','mini.py',240),
+  ('expression -> NUMBER','expression',1,'p_expression_number','mini.py',245),
+  ('expression -> DQ_STRING','expression',1,'p_expression_dq_string','mini.py',257),
+  ('expression -> SQ_STRING','expression',1,'p_expression_sq_string','mini.py',262),
+  ('expression -> NAME','expression',1,'p_expression_name','mini.py',267),
 ]

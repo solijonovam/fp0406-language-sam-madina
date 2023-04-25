@@ -10,44 +10,42 @@ Rule 4     statement -> simple_statement SEMICOLON
 Rule 5     statement -> SEMICOLON
 Rule 6     simple_statement -> PASS
 Rule 7     simple_statement -> NAME = expression
-Rule 8     expression -> expression + expression
-Rule 9     expression -> expression - expression
-Rule 10    expression -> expression * expression
-Rule 11    expression -> expression / expression
-Rule 12    expression -> expression ^ expression
-Rule 13    expression -> - expression
-Rule 14    expression -> + expression
-Rule 15    expression -> ( expression )
-Rule 16    expression -> NUMBER
-Rule 17    expression -> DQ_STRING
-Rule 18    expression -> SQ_STRING
-Rule 19    expression -> NAME
-Rule 20    simple_statement -> SAY expression
-Rule 21    simple_statement -> SET NAME = expression
+Rule 8     simple_statement -> SAY ( expression )
+Rule 9     expression -> expression + expression
+Rule 10    expression -> expression - expression
+Rule 11    expression -> expression * expression
+Rule 12    expression -> expression / expression
+Rule 13    expression -> expression ^ expression
+Rule 14    expression -> - expression
+Rule 15    expression -> + expression
+Rule 16    expression -> ( expression )
+Rule 17    expression -> NUMBER
+Rule 18    expression -> DQ_STRING
+Rule 19    expression -> SQ_STRING
+Rule 20    expression -> NAME
 
 Terminals, with rules where they appear
 
-(                    : 15
-)                    : 15
-*                    : 10
-+                    : 8 14
--                    : 9 13
-/                    : 11
-=                    : 7 21
-DQ_STRING            : 17
-NAME                 : 7 19 21
-NUMBER               : 16
+(                    : 8 16
+)                    : 8 16
+*                    : 11
++                    : 9 15
+-                    : 10 14
+/                    : 12
+=                    : 7
+DQ_STRING            : 18
+NAME                 : 7 20
+NUMBER               : 17
 PASS                 : 6
-SAY                  : 20
+SAY                  : 8
 SEMICOLON            : 4 5
-SET                  : 21
-SQ_STRING            : 18
-^                    : 12
+SQ_STRING            : 19
+^                    : 13
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 7 8 8 9 9 10 10 11 11 12 12 13 14 15 20 21
+expression           : 7 8 9 9 10 10 11 11 12 12 13 13 14 15 16
 program              : 0
 simple_statement     : 4
 statement            : 2 3
@@ -65,14 +63,12 @@ state 0
     (5) statement -> . SEMICOLON
     (6) simple_statement -> . PASS
     (7) simple_statement -> . NAME = expression
-    (20) simple_statement -> . SAY expression
-    (21) simple_statement -> . SET NAME = expression
+    (8) simple_statement -> . SAY ( expression )
 
     SEMICOLON       shift and go to state 5
     PASS            shift and go to state 6
     NAME            shift and go to state 7
     SAY             shift and go to state 8
-    SET             shift and go to state 9
 
     program                        shift and go to state 1
     statement_list                 shift and go to state 2
@@ -93,17 +89,15 @@ state 2
     (5) statement -> . SEMICOLON
     (6) simple_statement -> . PASS
     (7) simple_statement -> . NAME = expression
-    (20) simple_statement -> . SAY expression
-    (21) simple_statement -> . SET NAME = expression
+    (8) simple_statement -> . SAY ( expression )
 
     $end            reduce using rule 1 (program -> statement_list .)
     SEMICOLON       shift and go to state 5
     PASS            shift and go to state 6
     NAME            shift and go to state 7
     SAY             shift and go to state 8
-    SET             shift and go to state 9
 
-    statement                      shift and go to state 10
+    statement                      shift and go to state 9
     simple_statement               shift and go to state 4
 
 state 3
@@ -114,7 +108,6 @@ state 3
     PASS            reduce using rule 3 (statement_list -> statement .)
     NAME            reduce using rule 3 (statement_list -> statement .)
     SAY             reduce using rule 3 (statement_list -> statement .)
-    SET             reduce using rule 3 (statement_list -> statement .)
     $end            reduce using rule 3 (statement_list -> statement .)
 
 
@@ -122,7 +115,7 @@ state 4
 
     (4) statement -> simple_statement . SEMICOLON
 
-    SEMICOLON       shift and go to state 11
+    SEMICOLON       shift and go to state 10
 
 
 state 5
@@ -133,7 +126,6 @@ state 5
     PASS            reduce using rule 5 (statement -> SEMICOLON .)
     NAME            reduce using rule 5 (statement -> SEMICOLON .)
     SAY             reduce using rule 5 (statement -> SEMICOLON .)
-    SET             reduce using rule 5 (statement -> SEMICOLON .)
     $end            reduce using rule 5 (statement -> SEMICOLON .)
 
 
@@ -148,43 +140,17 @@ state 7
 
     (7) simple_statement -> NAME . = expression
 
-    =               shift and go to state 12
+    =               shift and go to state 11
 
 
 state 8
 
-    (20) simple_statement -> SAY . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (8) simple_statement -> SAY . ( expression )
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    (               shift and go to state 12
 
-    expression                     shift and go to state 13
 
 state 9
-
-    (21) simple_statement -> SET . NAME = expression
-
-    NAME            shift and go to state 21
-
-
-state 10
 
     (2) statement_list -> statement_list statement .
 
@@ -192,11 +158,10 @@ state 10
     PASS            reduce using rule 2 (statement_list -> statement_list statement .)
     NAME            reduce using rule 2 (statement_list -> statement_list statement .)
     SAY             reduce using rule 2 (statement_list -> statement_list statement .)
-    SET             reduce using rule 2 (statement_list -> statement_list statement .)
     $end            reduce using rule 2 (statement_list -> statement_list statement .)
 
 
-state 11
+state 10
 
     (4) statement -> simple_statement SEMICOLON .
 
@@ -204,574 +169,556 @@ state 11
     PASS            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     NAME            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     SAY             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
-    SET             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     $end            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
 
 
-state 12
+state 11
 
     (7) simple_statement -> NAME = . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
-    expression                     shift and go to state 22
+    expression                     shift and go to state 14
+
+state 12
+
+    (8) simple_statement -> SAY ( . expression )
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
+
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
+
+    expression                     shift and go to state 21
 
 state 13
 
-    (20) simple_statement -> SAY expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (20) expression -> NAME .
 
-    SEMICOLON       reduce using rule 20 (simple_statement -> SAY expression .)
-    +               shift and go to state 23
-    -               shift and go to state 24
-    *               shift and go to state 25
-    /               shift and go to state 26
-    ^               shift and go to state 27
+    +               reduce using rule 20 (expression -> NAME .)
+    -               reduce using rule 20 (expression -> NAME .)
+    *               reduce using rule 20 (expression -> NAME .)
+    /               reduce using rule 20 (expression -> NAME .)
+    ^               reduce using rule 20 (expression -> NAME .)
+    SEMICOLON       reduce using rule 20 (expression -> NAME .)
+    )               reduce using rule 20 (expression -> NAME .)
 
 
 state 14
 
-    (14) expression -> + . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (7) simple_statement -> NAME = expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    SEMICOLON       reduce using rule 7 (simple_statement -> NAME = expression .)
+    +               shift and go to state 22
+    -               shift and go to state 23
+    *               shift and go to state 24
+    /               shift and go to state 25
+    ^               shift and go to state 26
 
-    expression                     shift and go to state 28
 
 state 15
 
-    (13) expression -> - . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (15) expression -> + . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
-    expression                     shift and go to state 29
+    expression                     shift and go to state 27
 
 state 16
 
-    (15) expression -> ( . expression )
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (14) expression -> - . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
-    expression                     shift and go to state 30
+    expression                     shift and go to state 28
 
 state 17
 
-    (16) expression -> NUMBER .
+    (16) expression -> ( . expression )
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    +               reduce using rule 16 (expression -> NUMBER .)
-    -               reduce using rule 16 (expression -> NUMBER .)
-    *               reduce using rule 16 (expression -> NUMBER .)
-    /               reduce using rule 16 (expression -> NUMBER .)
-    ^               reduce using rule 16 (expression -> NUMBER .)
-    SEMICOLON       reduce using rule 16 (expression -> NUMBER .)
-    )               reduce using rule 16 (expression -> NUMBER .)
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
+    expression                     shift and go to state 29
 
 state 18
 
-    (17) expression -> DQ_STRING .
+    (17) expression -> NUMBER .
 
-    +               reduce using rule 17 (expression -> DQ_STRING .)
-    -               reduce using rule 17 (expression -> DQ_STRING .)
-    *               reduce using rule 17 (expression -> DQ_STRING .)
-    /               reduce using rule 17 (expression -> DQ_STRING .)
-    ^               reduce using rule 17 (expression -> DQ_STRING .)
-    SEMICOLON       reduce using rule 17 (expression -> DQ_STRING .)
-    )               reduce using rule 17 (expression -> DQ_STRING .)
+    +               reduce using rule 17 (expression -> NUMBER .)
+    -               reduce using rule 17 (expression -> NUMBER .)
+    *               reduce using rule 17 (expression -> NUMBER .)
+    /               reduce using rule 17 (expression -> NUMBER .)
+    ^               reduce using rule 17 (expression -> NUMBER .)
+    SEMICOLON       reduce using rule 17 (expression -> NUMBER .)
+    )               reduce using rule 17 (expression -> NUMBER .)
 
 
 state 19
 
-    (18) expression -> SQ_STRING .
+    (18) expression -> DQ_STRING .
 
-    +               reduce using rule 18 (expression -> SQ_STRING .)
-    -               reduce using rule 18 (expression -> SQ_STRING .)
-    *               reduce using rule 18 (expression -> SQ_STRING .)
-    /               reduce using rule 18 (expression -> SQ_STRING .)
-    ^               reduce using rule 18 (expression -> SQ_STRING .)
-    SEMICOLON       reduce using rule 18 (expression -> SQ_STRING .)
-    )               reduce using rule 18 (expression -> SQ_STRING .)
+    +               reduce using rule 18 (expression -> DQ_STRING .)
+    -               reduce using rule 18 (expression -> DQ_STRING .)
+    *               reduce using rule 18 (expression -> DQ_STRING .)
+    /               reduce using rule 18 (expression -> DQ_STRING .)
+    ^               reduce using rule 18 (expression -> DQ_STRING .)
+    SEMICOLON       reduce using rule 18 (expression -> DQ_STRING .)
+    )               reduce using rule 18 (expression -> DQ_STRING .)
 
 
 state 20
 
-    (19) expression -> NAME .
+    (19) expression -> SQ_STRING .
 
-    +               reduce using rule 19 (expression -> NAME .)
-    -               reduce using rule 19 (expression -> NAME .)
-    *               reduce using rule 19 (expression -> NAME .)
-    /               reduce using rule 19 (expression -> NAME .)
-    ^               reduce using rule 19 (expression -> NAME .)
-    SEMICOLON       reduce using rule 19 (expression -> NAME .)
-    )               reduce using rule 19 (expression -> NAME .)
+    +               reduce using rule 19 (expression -> SQ_STRING .)
+    -               reduce using rule 19 (expression -> SQ_STRING .)
+    *               reduce using rule 19 (expression -> SQ_STRING .)
+    /               reduce using rule 19 (expression -> SQ_STRING .)
+    ^               reduce using rule 19 (expression -> SQ_STRING .)
+    SEMICOLON       reduce using rule 19 (expression -> SQ_STRING .)
+    )               reduce using rule 19 (expression -> SQ_STRING .)
 
 
 state 21
 
-    (21) simple_statement -> SET NAME . = expression
+    (8) simple_statement -> SAY ( expression . )
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    =               shift and go to state 31
+    )               shift and go to state 30
+    +               shift and go to state 22
+    -               shift and go to state 23
+    *               shift and go to state 24
+    /               shift and go to state 25
+    ^               shift and go to state 26
 
 
 state 22
 
-    (7) simple_statement -> NAME = expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (9) expression -> expression + . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    SEMICOLON       reduce using rule 7 (simple_statement -> NAME = expression .)
-    +               shift and go to state 23
-    -               shift and go to state 24
-    *               shift and go to state 25
-    /               shift and go to state 26
-    ^               shift and go to state 27
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
+    expression                     shift and go to state 31
 
 state 23
 
-    (8) expression -> expression + . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (10) expression -> expression - . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
     expression                     shift and go to state 32
 
 state 24
 
-    (9) expression -> expression - . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (11) expression -> expression * . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
     expression                     shift and go to state 33
 
 state 25
 
-    (10) expression -> expression * . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (12) expression -> expression / . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
     expression                     shift and go to state 34
 
 state 26
 
-    (11) expression -> expression / . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (13) expression -> expression ^ . expression
+    (9) expression -> . expression + expression
+    (10) expression -> . expression - expression
+    (11) expression -> . expression * expression
+    (12) expression -> . expression / expression
+    (13) expression -> . expression ^ expression
+    (14) expression -> . - expression
+    (15) expression -> . + expression
+    (16) expression -> . ( expression )
+    (17) expression -> . NUMBER
+    (18) expression -> . DQ_STRING
+    (19) expression -> . SQ_STRING
+    (20) expression -> . NAME
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    -               shift and go to state 16
+    +               shift and go to state 15
+    (               shift and go to state 17
+    NUMBER          shift and go to state 18
+    DQ_STRING       shift and go to state 19
+    SQ_STRING       shift and go to state 20
+    NAME            shift and go to state 13
 
     expression                     shift and go to state 35
 
 state 27
 
-    (12) expression -> expression ^ . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (15) expression -> + expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    +               reduce using rule 15 (expression -> + expression .)
+    -               reduce using rule 15 (expression -> + expression .)
+    *               reduce using rule 15 (expression -> + expression .)
+    /               reduce using rule 15 (expression -> + expression .)
+    ^               reduce using rule 15 (expression -> + expression .)
+    SEMICOLON       reduce using rule 15 (expression -> + expression .)
+    )               reduce using rule 15 (expression -> + expression .)
 
-    expression                     shift and go to state 36
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
+  ! *               [ shift and go to state 24 ]
+  ! /               [ shift and go to state 25 ]
+  ! ^               [ shift and go to state 26 ]
+
 
 state 28
 
-    (14) expression -> + expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (14) expression -> - expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    +               reduce using rule 14 (expression -> + expression .)
-    -               reduce using rule 14 (expression -> + expression .)
-    *               reduce using rule 14 (expression -> + expression .)
-    /               reduce using rule 14 (expression -> + expression .)
-    ^               reduce using rule 14 (expression -> + expression .)
-    SEMICOLON       reduce using rule 14 (expression -> + expression .)
-    )               reduce using rule 14 (expression -> + expression .)
+    +               reduce using rule 14 (expression -> - expression .)
+    -               reduce using rule 14 (expression -> - expression .)
+    *               reduce using rule 14 (expression -> - expression .)
+    /               reduce using rule 14 (expression -> - expression .)
+    ^               reduce using rule 14 (expression -> - expression .)
+    SEMICOLON       reduce using rule 14 (expression -> - expression .)
+    )               reduce using rule 14 (expression -> - expression .)
 
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
-  ! *               [ shift and go to state 25 ]
-  ! /               [ shift and go to state 26 ]
-  ! ^               [ shift and go to state 27 ]
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
+  ! *               [ shift and go to state 24 ]
+  ! /               [ shift and go to state 25 ]
+  ! ^               [ shift and go to state 26 ]
 
 
 state 29
 
-    (13) expression -> - expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (16) expression -> ( expression . )
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    +               reduce using rule 13 (expression -> - expression .)
-    -               reduce using rule 13 (expression -> - expression .)
-    *               reduce using rule 13 (expression -> - expression .)
-    /               reduce using rule 13 (expression -> - expression .)
-    ^               reduce using rule 13 (expression -> - expression .)
-    SEMICOLON       reduce using rule 13 (expression -> - expression .)
-    )               reduce using rule 13 (expression -> - expression .)
-
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
-  ! *               [ shift and go to state 25 ]
-  ! /               [ shift and go to state 26 ]
-  ! ^               [ shift and go to state 27 ]
+    )               shift and go to state 36
+    +               shift and go to state 22
+    -               shift and go to state 23
+    *               shift and go to state 24
+    /               shift and go to state 25
+    ^               shift and go to state 26
 
 
 state 30
 
-    (15) expression -> ( expression . )
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (8) simple_statement -> SAY ( expression ) .
 
-    )               shift and go to state 37
-    +               shift and go to state 23
-    -               shift and go to state 24
-    *               shift and go to state 25
-    /               shift and go to state 26
-    ^               shift and go to state 27
+    SEMICOLON       reduce using rule 8 (simple_statement -> SAY ( expression ) .)
 
 
 state 31
 
-    (21) simple_statement -> SET NAME = . expression
-    (8) expression -> . expression + expression
-    (9) expression -> . expression - expression
-    (10) expression -> . expression * expression
-    (11) expression -> . expression / expression
-    (12) expression -> . expression ^ expression
-    (13) expression -> . - expression
-    (14) expression -> . + expression
-    (15) expression -> . ( expression )
-    (16) expression -> . NUMBER
-    (17) expression -> . DQ_STRING
-    (18) expression -> . SQ_STRING
-    (19) expression -> . NAME
+    (9) expression -> expression + expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    -               shift and go to state 15
-    +               shift and go to state 14
-    (               shift and go to state 16
-    NUMBER          shift and go to state 17
-    DQ_STRING       shift and go to state 18
-    SQ_STRING       shift and go to state 19
-    NAME            shift and go to state 20
+    +               reduce using rule 9 (expression -> expression + expression .)
+    -               reduce using rule 9 (expression -> expression + expression .)
+    SEMICOLON       reduce using rule 9 (expression -> expression + expression .)
+    )               reduce using rule 9 (expression -> expression + expression .)
+    *               shift and go to state 24
+    /               shift and go to state 25
+    ^               shift and go to state 26
 
-    expression                     shift and go to state 38
+  ! *               [ reduce using rule 9 (expression -> expression + expression .) ]
+  ! /               [ reduce using rule 9 (expression -> expression + expression .) ]
+  ! ^               [ reduce using rule 9 (expression -> expression + expression .) ]
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
+
 
 state 32
 
-    (8) expression -> expression + expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (10) expression -> expression - expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    +               reduce using rule 8 (expression -> expression + expression .)
-    -               reduce using rule 8 (expression -> expression + expression .)
-    SEMICOLON       reduce using rule 8 (expression -> expression + expression .)
-    )               reduce using rule 8 (expression -> expression + expression .)
-    *               shift and go to state 25
-    /               shift and go to state 26
-    ^               shift and go to state 27
+    +               reduce using rule 10 (expression -> expression - expression .)
+    -               reduce using rule 10 (expression -> expression - expression .)
+    SEMICOLON       reduce using rule 10 (expression -> expression - expression .)
+    )               reduce using rule 10 (expression -> expression - expression .)
+    *               shift and go to state 24
+    /               shift and go to state 25
+    ^               shift and go to state 26
 
-  ! *               [ reduce using rule 8 (expression -> expression + expression .) ]
-  ! /               [ reduce using rule 8 (expression -> expression + expression .) ]
-  ! ^               [ reduce using rule 8 (expression -> expression + expression .) ]
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
+  ! *               [ reduce using rule 10 (expression -> expression - expression .) ]
+  ! /               [ reduce using rule 10 (expression -> expression - expression .) ]
+  ! ^               [ reduce using rule 10 (expression -> expression - expression .) ]
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
 
 
 state 33
 
-    (9) expression -> expression - expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (11) expression -> expression * expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    +               reduce using rule 9 (expression -> expression - expression .)
-    -               reduce using rule 9 (expression -> expression - expression .)
-    SEMICOLON       reduce using rule 9 (expression -> expression - expression .)
-    )               reduce using rule 9 (expression -> expression - expression .)
-    *               shift and go to state 25
-    /               shift and go to state 26
-    ^               shift and go to state 27
+    +               reduce using rule 11 (expression -> expression * expression .)
+    -               reduce using rule 11 (expression -> expression * expression .)
+    *               reduce using rule 11 (expression -> expression * expression .)
+    /               reduce using rule 11 (expression -> expression * expression .)
+    SEMICOLON       reduce using rule 11 (expression -> expression * expression .)
+    )               reduce using rule 11 (expression -> expression * expression .)
+    ^               shift and go to state 26
 
-  ! *               [ reduce using rule 9 (expression -> expression - expression .) ]
-  ! /               [ reduce using rule 9 (expression -> expression - expression .) ]
-  ! ^               [ reduce using rule 9 (expression -> expression - expression .) ]
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
+  ! ^               [ reduce using rule 11 (expression -> expression * expression .) ]
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
+  ! *               [ shift and go to state 24 ]
+  ! /               [ shift and go to state 25 ]
 
 
 state 34
 
-    (10) expression -> expression * expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (12) expression -> expression / expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    +               reduce using rule 10 (expression -> expression * expression .)
-    -               reduce using rule 10 (expression -> expression * expression .)
-    *               reduce using rule 10 (expression -> expression * expression .)
-    /               reduce using rule 10 (expression -> expression * expression .)
-    SEMICOLON       reduce using rule 10 (expression -> expression * expression .)
-    )               reduce using rule 10 (expression -> expression * expression .)
-    ^               shift and go to state 27
+    +               reduce using rule 12 (expression -> expression / expression .)
+    -               reduce using rule 12 (expression -> expression / expression .)
+    *               reduce using rule 12 (expression -> expression / expression .)
+    /               reduce using rule 12 (expression -> expression / expression .)
+    SEMICOLON       reduce using rule 12 (expression -> expression / expression .)
+    )               reduce using rule 12 (expression -> expression / expression .)
+    ^               shift and go to state 26
 
-  ! ^               [ reduce using rule 10 (expression -> expression * expression .) ]
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
-  ! *               [ shift and go to state 25 ]
-  ! /               [ shift and go to state 26 ]
+  ! ^               [ reduce using rule 12 (expression -> expression / expression .) ]
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
+  ! *               [ shift and go to state 24 ]
+  ! /               [ shift and go to state 25 ]
 
 
 state 35
 
-    (11) expression -> expression / expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (13) expression -> expression ^ expression .
+    (9) expression -> expression . + expression
+    (10) expression -> expression . - expression
+    (11) expression -> expression . * expression
+    (12) expression -> expression . / expression
+    (13) expression -> expression . ^ expression
 
-    +               reduce using rule 11 (expression -> expression / expression .)
-    -               reduce using rule 11 (expression -> expression / expression .)
-    *               reduce using rule 11 (expression -> expression / expression .)
-    /               reduce using rule 11 (expression -> expression / expression .)
-    SEMICOLON       reduce using rule 11 (expression -> expression / expression .)
-    )               reduce using rule 11 (expression -> expression / expression .)
-    ^               shift and go to state 27
+    +               reduce using rule 13 (expression -> expression ^ expression .)
+    -               reduce using rule 13 (expression -> expression ^ expression .)
+    *               reduce using rule 13 (expression -> expression ^ expression .)
+    /               reduce using rule 13 (expression -> expression ^ expression .)
+    ^               reduce using rule 13 (expression -> expression ^ expression .)
+    SEMICOLON       reduce using rule 13 (expression -> expression ^ expression .)
+    )               reduce using rule 13 (expression -> expression ^ expression .)
 
-  ! ^               [ reduce using rule 11 (expression -> expression / expression .) ]
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
-  ! *               [ shift and go to state 25 ]
-  ! /               [ shift and go to state 26 ]
+  ! +               [ shift and go to state 22 ]
+  ! -               [ shift and go to state 23 ]
+  ! *               [ shift and go to state 24 ]
+  ! /               [ shift and go to state 25 ]
+  ! ^               [ shift and go to state 26 ]
 
 
 state 36
 
-    (12) expression -> expression ^ expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
+    (16) expression -> ( expression ) .
 
-    +               reduce using rule 12 (expression -> expression ^ expression .)
-    -               reduce using rule 12 (expression -> expression ^ expression .)
-    *               reduce using rule 12 (expression -> expression ^ expression .)
-    /               reduce using rule 12 (expression -> expression ^ expression .)
-    ^               reduce using rule 12 (expression -> expression ^ expression .)
-    SEMICOLON       reduce using rule 12 (expression -> expression ^ expression .)
-    )               reduce using rule 12 (expression -> expression ^ expression .)
-
-  ! +               [ shift and go to state 23 ]
-  ! -               [ shift and go to state 24 ]
-  ! *               [ shift and go to state 25 ]
-  ! /               [ shift and go to state 26 ]
-  ! ^               [ shift and go to state 27 ]
-
-
-state 37
-
-    (15) expression -> ( expression ) .
-
-    +               reduce using rule 15 (expression -> ( expression ) .)
-    -               reduce using rule 15 (expression -> ( expression ) .)
-    *               reduce using rule 15 (expression -> ( expression ) .)
-    /               reduce using rule 15 (expression -> ( expression ) .)
-    ^               reduce using rule 15 (expression -> ( expression ) .)
-    SEMICOLON       reduce using rule 15 (expression -> ( expression ) .)
-    )               reduce using rule 15 (expression -> ( expression ) .)
-
-
-state 38
-
-    (21) simple_statement -> SET NAME = expression .
-    (8) expression -> expression . + expression
-    (9) expression -> expression . - expression
-    (10) expression -> expression . * expression
-    (11) expression -> expression . / expression
-    (12) expression -> expression . ^ expression
-
-    SEMICOLON       reduce using rule 21 (simple_statement -> SET NAME = expression .)
-    +               shift and go to state 23
-    -               shift and go to state 24
-    *               shift and go to state 25
-    /               shift and go to state 26
-    ^               shift and go to state 27
+    +               reduce using rule 16 (expression -> ( expression ) .)
+    -               reduce using rule 16 (expression -> ( expression ) .)
+    *               reduce using rule 16 (expression -> ( expression ) .)
+    /               reduce using rule 16 (expression -> ( expression ) .)
+    ^               reduce using rule 16 (expression -> ( expression ) .)
+    SEMICOLON       reduce using rule 16 (expression -> ( expression ) .)
+    )               reduce using rule 16 (expression -> ( expression ) .)
 

@@ -18,14 +18,13 @@ from MiniAST import MiniAST
 
 # reserved words / keywords
 reserved = {
-    "pass": "PASS",
     "say": "SAY",
-    "set": "SET",
+    "pass": "PASS"
 }
 
 # tokens
 tokens = [
-    'DQ_STRING', 'NAME', 'NUMBER', 'SEMICOLON', 'SQ_STRING'
+    'DQ_STRING', 'NAME', 'NUMBER', 'SEMICOLON', 'SQ_STRING'  # , 'LPRAREN', 'RPAREN'
 ]
 
 # all tokens, reserved words and keywords, combined
@@ -45,25 +44,7 @@ comments = {}
 # noinspection PySingleQuotedDocstring
 def t_NAME(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reserved.get(t.value, 'NAME')  # Check for reserved words
-    return t
-
-
-def t_PASS(t):
-    r'pass'
-    t.type = reserved.get(t.value, 'PASS')
-    return t
-
-
-def t_SAY(t):
-    r'say'
-    t.type = reserved.get(t.value, 'SAY')
-    return t
-
-
-def t_SET(t):
-    r'set'
-    t.type = reserved.get(t.value, 'SET')
+    t.type = reserved.get(t.value, 'NAME')    # Check for reserved words
     return t
 
 
@@ -117,12 +98,27 @@ def t_DQ_STRING(t):
     r'"[^"\\]*(?:\\.[^"\\]*)*"'
     return t
 
+
 # noinspection PyPep8Naming
 # noinspection PySingleQuotedDocstring
 def t_INLINE_COMMENT(t):
     r'//.*'
     comments[t.lexer.lineno] = t.value
     # return t
+
+
+# noinspection PyPep8Naming
+# noinspection SpellCheckingInspection
+# def t_LPAREN(t):
+#     """\("""
+#     return t
+
+
+# noinspection PyPep8Naming
+# noinspection SpellCheckingInspection
+# def t_LPAREN(t):
+#     """\)"""
+#     return t
 
 
 # Whitespace to ignore
@@ -213,6 +209,11 @@ def p_simple_statement_assign(p):
     p[0] = ASTNODE("assign", value=p[1], children=[p[3]])
 
 
+def p_simple_statement_say(p):
+    """simple_statement : SAY '(' expression ')'"""
+    p[0] = ASTNODE("say", children=[p[3]])
+
+
 # noinspection SpellCheckingInspection
 def p_expression_binop(p):
     """expression : expression '+' expression
@@ -245,14 +246,21 @@ def p_expression_number(p):
     p[0] = ASTNODE("number", value=p[1])
 
 
+def remove_outside_quotes(quoted_string: str) -> str:
+    if quoted_string[0] == '"':
+        return quoted_string.split('"')[1]
+
+    return quoted_string.split("'")[1]
+
+
 def p_expression_dq_string(p):
     """expression : DQ_STRING"""
-    p[0] = ASTNODE("string", children=[p[1]])
+    p[0] = ASTNODE("string", value=remove_outside_quotes(p[1]))
 
 
 def p_expression_sq_string(p):
     """expression : SQ_STRING"""
-    p[0] = ASTNODE("string", children=[p[1]])
+    p[0] = ASTNODE("string", value=remove_outside_quotes(p[1]))
 
 
 def p_expression_name(p):
@@ -260,21 +268,12 @@ def p_expression_name(p):
     p[0] = ASTNODE("name", value=p[1])
 
 
-def p_simple_statement_say(p):
-    """simple_statement : SAY expression"""
-    p[0] = ASTNODE("say", children=[p[2]])
-
-
-def p_simple_statement_set(p):
-    """simple_statement : SET NAME "=" expression"""
-    p[0] = ASTNODE("set", value=p[2], children=[p[4]])
-
 # p_error() is required
 def p_error(p):
     try:
-        print("{1}: Syntax error on '{0}'".format(p.value, lexer.lineno))
+        print("{1}: Syntax error on '{0}'".format(p.value, lexer.lineno-1))
     except AttributeError:
-        print("{0}: Syntax error on line".format(lexer.lineno))
+        print("{0}: Syntax error on line".format(lexer.lineno-1))
 
 
 parser = yacc.yacc()
@@ -282,23 +281,31 @@ parser = yacc.yacc()
 # ---------------------------------------------------------- PROCESS INPUT
 
 if __name__ == "__main__":
+
     # a test program; the program can be read from a file, too;
     program = """
-    say "Madina was here";
+        // top of the program
+        a = 3.174; b = 5;
+        // comment by itself
+        c = 7 
+            + a; // multiline assignment with expression :-)
+        d = 2 * (a + b) * c; e = -d;
+        say(d);
+        say("Hello, World!");
+        say("Hi" + " there!"); // the MiniAST.py file needs to be fixed so that strings concatenate in order
+        say("Is " + "it " + "Time " + "for " + "dinner?");
+        say("sam said anything!!!!");
     """
 
     root = None
     yacc.parse(program)  # computes root
 
     mini_ast = MiniAST(root)  # ---------- set up AST
-    print(mini_ast)  # ------------------- show the AST
+    # print(mini_ast)  # ------------------- show the AST
     mini_ast.reserved_names = tokens  # -- tell the AST which words are reserved/keywords/tokens
     mini_ast.process_ast()  # ------------ Execute the program (or emit it if writing a compiler)
 
     # diagnostic information
-    #print("AST stack: {}".format(mini_ast.stack.stack))
-    #print("Names:\n", mini_ast.names)
-    #print("comments:\n", comments)
-
-
-
+    # print("AST stack: {}".format(mini_ast.stack.stack))
+    # print("Names:\n", mini_ast.names)
+    # print("comments:\n", comments)

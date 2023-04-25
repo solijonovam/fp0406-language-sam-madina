@@ -66,6 +66,7 @@ class MiniAST(ASTPROC):
             elif node.name == "pass":
                 pass
             elif node.name == "say":
+                # print(Common.object_type(node.children[0].value))
                 process_node(node.children[0])
                 self.stack.check_underflow(1)
                 print(self.stack.pop())
