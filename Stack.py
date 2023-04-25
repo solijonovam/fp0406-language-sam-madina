@@ -139,10 +139,11 @@ class Stack:
 if __name__ == "__main__":
     x = Stack()
     x.push(13)
+    x.type()
     for i in range(0, 6):
         x.push(i)
     x.push(6)
-    #print(x.stack)
+    # print(x.stack)
     x.make_list()
     x.push(17)
     print(x.stack)

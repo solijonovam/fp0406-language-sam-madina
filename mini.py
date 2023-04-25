@@ -272,15 +272,15 @@ def p_simple_statement_set(p):
 
 
 
-def p_expression_boolean_op(p):
-    """expression : expression AND expression
-                  | expression OR expression
-                  | NOT expression"""
-    if len(p) == 4:
-        p[0] = ASTNODE("boolean_op", value=p[2], children=[p[1], p[3]])
-    else:
-        p[0] = ASTNODE("boolean_op", value=p[1], children=[p[2]])
-
+# def p_expression_boolean_op(p):
+#     """expression : expression AND expression
+#                   | expression OR expression
+#                   | NOT expression"""
+#     if len(p) == 4:
+#         p[0] = ASTNODE("boolean_op", value=p[2], children=[p[1], p[3]])
+#     else:
+#         p[0] = ASTNODE("boolean_op", value=p[1], children=[p[2]])
+#
 
 # p_error() is required
 def p_error(p):
