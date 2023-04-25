@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'programleft+-left*/left^rightUMINUSUPOSITIVEAND CATCH CLASS CONSTRUCTOR DQ_STRING ELSE END FALSE FINALLY FUNCTION IF INPUT NAME NOT NUMBER OBJECT OR PARAMETERS PASS RETURN SAY SEMICOLON SET SQ_STRING SUITE TRUE TRY WHILEprogram : statement_liststatement_list : statement_list statementstatement_list : statementstatement : simple_statement SEMICOLONstatement : SEMICOLONsimple_statement : PASSsimple_statement : NAME "=" expressionexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expression\n                  | expression \'^\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'+\' expression %prec UPOSITIVEexpression : \'(\' expression \')\'expression : NUMBERexpression : DQ_STRINGexpression : SQ_STRINGexpression : NAMEsimple_statement : SAY expressionsimple_statement : SET NAME "=" expressionsimple_statement : INPUT NAMEsimple_statement : IF expression \':\' suite ELSE \':\' suitesimple_statement : WHILE expression \':\' suiteparameters : NAMEsimple_statement : FUNCTION NAME \'(\' parameters \')\' \':\' suitesimple_statement : RETURN expressionexpression : expression AND expression\n                  | expression OR expression\n                  | NOT expressionsimple_statement : CLASS NAME \':\' suitesimple_statement : OBJECT NAME \'=\' NAME \'(\' \')\'simple_statement : CONSTRUCTOR \'(\' parameters \')\' \':\' suitesimple_statement : TRY \':\' suite catch finallycatch : CATCH expression \':\' suitefinally : FINALLY \':\' suite\n    suite : \'(\' statement_list \')\'\n    '
+_lr_signature = 'programleft+-left*/left^rightUMINUSUPOSITIVEAND CATCH CLASS CONSTRUCTOR DQ_STRING ELSE END FALSE FINALLY FUNCTION IF INPUT NAME NOT NUMBER OBJECT OR PARAMETERS PASS RETURN SAY SEMICOLON SET SQ_STRING SUITE TRUE TRY WHILEprogram : statement_liststatement_list : statement_list statementstatement_list : statementstatement : simple_statement SEMICOLONstatement : SEMICOLONsimple_statement : PASSsimple_statement : NAME "=" expressionexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expression\n                  | expression \'^\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'+\' expression %prec UPOSITIVEexpression : \'(\' expression \')\'expression : NUMBERexpression : DQ_STRINGexpression : SQ_STRINGexpression : NAMEsimple_statement : SAY \'(\' expression \')\'simple_statement : SET NAME "=" expressionsimple_statement : INPUT NAMEsimple_statement : IF expression \':\' suite ELSE \':\' suitesimple_statement : WHILE expression \':\' suiteparameters : NAMEsimple_statement : FUNCTION NAME \'(\' parameters \')\' \':\' suitesimple_statement : RETURN expressionexpression : expression AND expression\n                  | expression OR expression\n                  | NOT expressionsimple_statement : CLASS NAME \':\' suitesimple_statement : OBJECT NAME \'=\' NAME \'(\' \')\'simple_statement : CONSTRUCTOR \'(\' parameters \')\' \':\' suitesimple_statement : TRY \':\' suite catch finallycatch : CATCH expression \':\' suitefinally : FINALLY \':\' suite\n    suite : \'(\' statement_list \')\'\n    '
     
-_lr_action_items = {'SEMICOLON':([0,2,3,4,5,6,19,20,22,26,27,28,29,32,36,41,49,50,52,62,63,64,65,66,67,68,69,70,71,73,75,80,85,88,91,92,95,96,97,],[5,5,-3,20,-5,-6,-2,-4,-20,-16,-17,-18,-19,-22,-27,-7,-14,-13,-30,5,-8,-9,-10,-11,-12,-28,-29,-15,-21,-24,-31,5,-34,-37,-32,-33,-23,-26,-36,]),'PASS':([0,2,3,5,19,20,62,80,],[6,6,-3,-5,-2,-4,6,6,]),'NAME':([0,2,3,5,8,9,10,11,12,13,14,15,16,19,20,21,23,24,25,30,39,42,43,44,45,46,47,48,53,56,58,62,79,80,],[7,7,-3,-5,29,31,32,29,29,35,29,37,38,-2,-4,29,29,29,29,29,60,29,29,29,29,29,29,29,29,60,76,7,29,7,]),'SAY':([0,2,3,5,19,20,62,80,],[8,8,-3,-5,-2,-4,8,8,]),'SET':([0,2,3,5,19,20,62,80,],[9,9,-3,-5,-2,-4,9,9,]),'INPUT':([0,2,3,5,19,20,62,80,],[10,10,-3,-5,-2,-4,10,10,]),'IF':([0,2,3,5,19,20,62,80,],[11,11,-3,-5,-2,-4,11,11,]),'WHILE':([0,2,3,5,19,20,62,80,],[12,12,-3,-5,-2,-4,12,12,]),'FUNCTION':([0,2,3,5,19,20,62,80,],[13,13,-3,-5,-2,-4,13,13,]),'RETURN':([0,2,3,5,19,20,62,80,],[14,14,-3,-5,-2,-4,14,14,]),'CLASS':([0,2,3,5,19,20,62,80,],[15,15,-3,-5,-2,-4,15,15,]),'OBJECT':([0,2,3,5,19,20,62,80,],[16,16,-3,-5,-2,-4,16,16,]),'CONSTRUCTOR':([0,2,3,5,19,20,62,80,],[17,17,-3,-5,-2,-4,17,17,]),'TRY':([0,2,3,5,19,20,62,80,],[18,18,-3,-5,-2,-4,18,18,]),'$end':([1,2,3,5,19,20,],[0,-1,-3,-5,-2,-4,]),')':([3,5,19,20,26,27,28,29,49,50,51,52,59,60,63,64,65,66,67,68,69,70,74,80,83,],[-3,-5,-2,-4,-16,-17,-18,-19,-14,-13,70,-30,77,-25,-8,-9,-10,-11,-12,-28,-29,-15,82,88,91,]),'=':([7,31,38,],[21,53,58,]),'-':([8,11,12,14,21,22,23,24,25,26,27,28,29,30,33,34,36,41,42,43,44,45,46,47,48,49,50,51,52,53,63,64,65,66,67,68,69,70,71,79,87,],[24,24,24,24,24,43,24,24,24,-16,-17,-18,-19,24,43,43,43,43,24,24,24,24,24,24,24,-14,-13,43,43,24,-8,-9,-10,-11,-12,43,43,-15,43,24,43,]),'+':([8,11,12,14,21,22,23,24,25,26,27,28,29,30,33,34,36,41,42,43,44,45,46,47,48,49,50,51,52,53,63,64,65,66,67,68,69,70,71,79,87,],[23,23,23,23,23,42,23,23,23,-16,-17,-18,-19,23,42,42,42,42,23,23,23,23,23,23,23,-14,-13,42,42,23,-8,-9,-10,-11,-12,42,42,-15,42,23,42,]),'(':([8,11,12,14,17,21,23,24,25,30,35,40,42,43,44,45,46,47,48,53,54,55,57,76,79,84,89,90,93,94,],[25,25,25,25,39,25,25,25,25,25,56,62,25,25,25,25,25,25,25,25,62,62,62,83,25,62,62,62,62,62,]),'NUMBER':([8,11,12,14,21,23,24,25,30,42,43,44,45,46,47,48,53,79,],[26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,]),'DQ_STRING':([8,11,12,14,21,23,24,25,30,42,43,44,45,46,47,48,53,79,],[27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,]),'SQ_STRING':([8,11,12,14,21,23,24,25,30,42,43,44,45,46,47,48,53,79,],[28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,]),'NOT':([8,11,12,14,21,23,24,25,30,42,43,44,45,46,47,48,53,79,],[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,]),':':([18,26,27,28,29,33,34,37,49,50,52,63,64,65,66,67,68,69,70,77,81,82,86,87,],[40,-16,-17,-18,-19,54,55,57,-14,-13,-30,-8,-9,-10,-11,-12,-28,-29,-15,84,89,90,93,94,]),'*':([22,26,27,28,29,33,34,36,41,49,50,51,52,63,64,65,66,67,68,69,70,71,87,],[44,-16,-17,-18,-19,44,44,44,44,-14,-13,44,44,44,44,-10,-11,-12,44,44,-15,44,44,]),'/':([22,26,27,28,29,33,34,36,41,49,50,51,52,63,64,65,66,67,68,69,70,71,87,],[45,-16,-17,-18,-19,45,45,45,45,-14,-13,45,45,45,45,-10,-11,-12,45,45,-15,45,45,]),'^':([22,26,27,28,29,33,34,36,41,49,50,51,52,63,64,65,66,67,68,69,70,71,87,],[46,-16,-17,-18,-19,46,46,46,46,-14,-13,46,46,46,46,46,46,-12,46,46,-15,46,46,]),'AND':([22,26,27,28,29,33,34,36,41,49,50,51,52,63,64,65,66,67,68,69,70,71,87,],[47,-16,-17,-18,-19,47,47,47,47,-14,-13,47,47,-8,-9,-10,-11,-12,47,47,-15,47,47,]),'OR':([22,26,27,28,29,33,34,36,41,49,50,51,52,63,64,65,66,67,68,69,70,71,87,],[48,-16,-17,-18,-19,48,48,48,48,-14,-13,48,48,-8,-9,-10,-11,-12,48,48,-15,48,48,]),'CATCH':([61,88,],[79,-37,]),'ELSE':([72,88,],[81,-37,]),'FINALLY':([78,88,98,],[86,-37,-35,]),}
+_lr_action_items = {'SEMICOLON':([0,2,3,4,5,6,19,20,24,29,30,31,32,36,41,52,53,55,63,64,65,67,68,69,70,71,72,73,74,75,77,82,87,90,93,94,97,98,99,],[5,5,-3,20,-5,-6,-2,-4,-22,-16,-17,-18,-19,-27,-7,-14,-13,-30,5,-20,-21,-8,-9,-10,-11,-12,-28,-29,-15,-24,-31,5,-34,-37,-32,-33,-23,-26,-36,]),'PASS':([0,2,3,5,19,20,63,82,],[6,6,-3,-5,-2,-4,6,6,]),'NAME':([0,2,3,5,9,10,11,12,13,14,15,16,19,20,21,22,26,27,28,33,39,43,45,46,47,48,49,50,51,57,59,63,81,82,],[7,7,-3,-5,23,24,32,32,35,32,37,38,-2,-4,32,32,32,32,32,32,61,32,32,32,32,32,32,32,32,61,78,7,32,7,]),'SAY':([0,2,3,5,19,20,63,82,],[8,8,-3,-5,-2,-4,8,8,]),'SET':([0,2,3,5,19,20,63,82,],[9,9,-3,-5,-2,-4,9,9,]),'INPUT':([0,2,3,5,19,20,63,82,],[10,10,-3,-5,-2,-4,10,10,]),'IF':([0,2,3,5,19,20,63,82,],[11,11,-3,-5,-2,-4,11,11,]),'WHILE':([0,2,3,5,19,20,63,82,],[12,12,-3,-5,-2,-4,12,12,]),'FUNCTION':([0,2,3,5,19,20,63,82,],[13,13,-3,-5,-2,-4,13,13,]),'RETURN':([0,2,3,5,19,20,63,82,],[14,14,-3,-5,-2,-4,14,14,]),'CLASS':([0,2,3,5,19,20,63,82,],[15,15,-3,-5,-2,-4,15,15,]),'OBJECT':([0,2,3,5,19,20,63,82,],[16,16,-3,-5,-2,-4,16,16,]),'CONSTRUCTOR':([0,2,3,5,19,20,63,82,],[17,17,-3,-5,-2,-4,17,17,]),'TRY':([0,2,3,5,19,20,63,82,],[18,18,-3,-5,-2,-4,18,18,]),'$end':([1,2,3,5,19,20,],[0,-1,-3,-5,-2,-4,]),')':([3,5,19,20,29,30,31,32,42,52,53,54,55,60,61,67,68,69,70,71,72,73,74,76,82,85,],[-3,-5,-2,-4,-16,-17,-18,-19,64,-14,-13,74,-30,79,-25,-8,-9,-10,-11,-12,-28,-29,-15,84,90,93,]),'=':([7,23,38,],[21,43,59,]),'(':([8,11,12,14,17,21,22,26,27,28,33,35,40,43,44,45,46,47,48,49,50,51,56,58,78,81,86,91,92,95,96,],[22,28,28,28,39,28,28,28,28,28,28,57,63,28,63,28,28,28,28,28,28,28,63,63,85,28,63,63,63,63,63,]),'-':([11,12,14,21,22,25,26,27,28,29,30,31,32,33,34,36,41,42,43,45,46,47,48,49,50,51,52,53,54,55,65,67,68,69,70,71,72,73,74,81,89,],[27,27,27,27,27,46,27,27,27,-16,-17,-18,-19,27,46,46,46,46,27,27,27,27,27,27,27,27,-14,-13,46,46,46,-8,-9,-10,-11,-12,46,46,-15,27,46,]),'+':([11,12,14,21,22,25,26,27,28,29,30,31,32,33,34,36,41,42,43,45,46,47,48,49,50,51,52,53,54,55,65,67,68,69,70,71,72,73,74,81,89,],[26,26,26,26,26,45,26,26,26,-16,-17,-18,-19,26,45,45,45,45,26,26,26,26,26,26,26,26,-14,-13,45,45,45,-8,-9,-10,-11,-12,45,45,-15,26,45,]),'NUMBER':([11,12,14,21,22,26,27,28,33,43,45,46,47,48,49,50,51,81,],[29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,]),'DQ_STRING':([11,12,14,21,22,26,27,28,33,43,45,46,47,48,49,50,51,81,],[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,]),'SQ_STRING':([11,12,14,21,22,26,27,28,33,43,45,46,47,48,49,50,51,81,],[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,]),'NOT':([11,12,14,21,22,26,27,28,33,43,45,46,47,48,49,50,51,81,],[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,]),':':([18,25,29,30,31,32,34,37,52,53,55,67,68,69,70,71,72,73,74,79,83,84,88,89,],[40,44,-16,-17,-18,-19,56,58,-14,-13,-30,-8,-9,-10,-11,-12,-28,-29,-15,86,91,92,95,96,]),'*':([25,29,30,31,32,34,36,41,42,52,53,54,55,65,67,68,69,70,71,72,73,74,89,],[47,-16,-17,-18,-19,47,47,47,47,-14,-13,47,47,47,47,47,-10,-11,-12,47,47,-15,47,]),'/':([25,29,30,31,32,34,36,41,42,52,53,54,55,65,67,68,69,70,71,72,73,74,89,],[48,-16,-17,-18,-19,48,48,48,48,-14,-13,48,48,48,48,48,-10,-11,-12,48,48,-15,48,]),'^':([25,29,30,31,32,34,36,41,42,52,53,54,55,65,67,68,69,70,71,72,73,74,89,],[49,-16,-17,-18,-19,49,49,49,49,-14,-13,49,49,49,49,49,49,49,-12,49,49,-15,49,]),'AND':([25,29,30,31,32,34,36,41,42,52,53,54,55,65,67,68,69,70,71,72,73,74,89,],[50,-16,-17,-18,-19,50,50,50,50,-14,-13,50,50,50,-8,-9,-10,-11,-12,50,50,-15,50,]),'OR':([25,29,30,31,32,34,36,41,42,52,53,54,55,65,67,68,69,70,71,72,73,74,89,],[51,-16,-17,-18,-19,51,51,51,51,-14,-13,51,51,51,-8,-9,-10,-11,-12,51,51,-15,51,]),'CATCH':([62,90,],[81,-37,]),'ELSE':([66,90,],[83,-37,]),'FINALLY':([80,90,100,],[88,-37,-35,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'statement_list':([0,62,],[2,80,]),'statement':([0,2,62,80,],[3,19,3,19,]),'simple_statement':([0,2,62,80,],[4,4,4,4,]),'expression':([8,11,12,14,21,23,24,25,30,42,43,44,45,46,47,48,53,79,],[22,33,34,36,41,49,50,51,52,63,64,65,66,67,68,69,71,87,]),'parameters':([39,56,],[59,74,]),'suite':([40,54,55,57,84,89,90,93,94,],[61,72,73,75,92,95,96,97,98,]),'catch':([61,],[78,]),'finally':([78,],[85,]),}
+_lr_goto_items = {'program':([0,],[1,]),'statement_list':([0,63,],[2,82,]),'statement':([0,2,63,82,],[3,19,3,19,]),'simple_statement':([0,2,63,82,],[4,4,4,4,]),'expression':([11,12,14,21,22,26,27,28,33,43,45,46,47,48,49,50,51,81,],[25,34,36,41,42,52,53,54,55,65,67,68,69,70,71,72,73,89,]),'parameters':([39,57,],[60,76,]),'suite':([40,44,56,58,86,91,92,95,96,],[62,66,75,77,94,97,98,99,100,]),'catch':([62,],[80,]),'finally':([80,],[87,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,41 +27,41 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statement_list','program',1,'p_program','mini.py',178),
-  ('statement_list -> statement_list statement','statement_list',2,'p_statement_list2','mini.py',184),
-  ('statement_list -> statement','statement_list',1,'p_statement_list','mini.py',189),
-  ('statement -> simple_statement SEMICOLON','statement',2,'p_statement_no_comment','mini.py',199),
-  ('statement -> SEMICOLON','statement',1,'p_statement_no_code_no_comment','mini.py',204),
-  ('simple_statement -> PASS','simple_statement',1,'p_simple_statement_pass','mini.py',210),
-  ('simple_statement -> NAME = expression','simple_statement',3,'p_simple_statement_assign','mini.py',215),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','mini.py',221),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','mini.py',222),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','mini.py',223),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','mini.py',224),
-  ('expression -> expression ^ expression','expression',3,'p_expression_binop','mini.py',225),
-  ('expression -> - expression','expression',2,'p_expression_uminus','mini.py',231),
-  ('expression -> + expression','expression',2,'p_expression_upositive','mini.py',237),
-  ('expression -> ( expression )','expression',3,'p_expression_group','mini.py',242),
-  ('expression -> NUMBER','expression',1,'p_expression_number','mini.py',247),
-  ('expression -> DQ_STRING','expression',1,'p_expression_dq_string','mini.py',252),
-  ('expression -> SQ_STRING','expression',1,'p_expression_sq_string','mini.py',257),
-  ('expression -> NAME','expression',1,'p_expression_name','mini.py',262),
-  ('simple_statement -> SAY expression','simple_statement',2,'p_simple_statement_say','mini.py',267),
-  ('simple_statement -> SET NAME = expression','simple_statement',4,'p_simple_statement_set','mini.py',272),
-  ('simple_statement -> INPUT NAME','simple_statement',2,'p_simple_statement_input','mini.py',277),
-  ('simple_statement -> IF expression : suite ELSE : suite','simple_statement',7,'p_simple_statement_if','mini.py',282),
-  ('simple_statement -> WHILE expression : suite','simple_statement',4,'p_simple_statement_while','mini.py',287),
-  ('parameters -> NAME','parameters',1,'p_parameters','mini.py',292),
-  ('simple_statement -> FUNCTION NAME ( parameters ) : suite','simple_statement',7,'p_simple_statement_function','mini.py',297),
-  ('simple_statement -> RETURN expression','simple_statement',2,'p_simple_statement_return','mini.py',302),
-  ('expression -> expression AND expression','expression',3,'p_expression_boolean_op','mini.py',307),
-  ('expression -> expression OR expression','expression',3,'p_expression_boolean_op','mini.py',308),
-  ('expression -> NOT expression','expression',2,'p_expression_boolean_op','mini.py',309),
-  ('simple_statement -> CLASS NAME : suite','simple_statement',4,'p_simple_statement_class','mini.py',317),
-  ('simple_statement -> OBJECT NAME = NAME ( )','simple_statement',6,'p_simple_statement_object','mini.py',322),
-  ('simple_statement -> CONSTRUCTOR ( parameters ) : suite','simple_statement',6,'p_simple_statement_constructor','mini.py',327),
-  ('simple_statement -> TRY : suite catch finally','simple_statement',5,'p_simple_statement_try_catch_finally','mini.py',332),
-  ('catch -> CATCH expression : suite','catch',4,'p_catch','mini.py',337),
-  ('finally -> FINALLY : suite','finally',3,'p_finally','mini.py',342),
-  ('suite -> ( statement_list )','suite',3,'p_suite','mini.py',348),
+  ('program -> statement_list','program',1,'p_program','mini.py',318),
+  ('statement_list -> statement_list statement','statement_list',2,'p_statement_list2','mini.py',324),
+  ('statement_list -> statement','statement_list',1,'p_statement_list','mini.py',329),
+  ('statement -> simple_statement SEMICOLON','statement',2,'p_statement_no_comment','mini.py',339),
+  ('statement -> SEMICOLON','statement',1,'p_statement_no_code_no_comment','mini.py',344),
+  ('simple_statement -> PASS','simple_statement',1,'p_simple_statement_pass','mini.py',350),
+  ('simple_statement -> NAME = expression','simple_statement',3,'p_simple_statement_assign','mini.py',355),
+  ('expression -> expression + expression','expression',3,'p_expression_binop','mini.py',361),
+  ('expression -> expression - expression','expression',3,'p_expression_binop','mini.py',362),
+  ('expression -> expression * expression','expression',3,'p_expression_binop','mini.py',363),
+  ('expression -> expression / expression','expression',3,'p_expression_binop','mini.py',364),
+  ('expression -> expression ^ expression','expression',3,'p_expression_binop','mini.py',365),
+  ('expression -> - expression','expression',2,'p_expression_uminus','mini.py',371),
+  ('expression -> + expression','expression',2,'p_expression_upositive','mini.py',377),
+  ('expression -> ( expression )','expression',3,'p_expression_group','mini.py',382),
+  ('expression -> NUMBER','expression',1,'p_expression_number','mini.py',387),
+  ('expression -> DQ_STRING','expression',1,'p_expression_dq_string','mini.py',392),
+  ('expression -> SQ_STRING','expression',1,'p_expression_sq_string','mini.py',397),
+  ('expression -> NAME','expression',1,'p_expression_name','mini.py',402),
+  ('simple_statement -> SAY ( expression )','simple_statement',4,'p_simple_statement_say','mini.py',407),
+  ('simple_statement -> SET NAME = expression','simple_statement',4,'p_simple_statement_set','mini.py',412),
+  ('simple_statement -> INPUT NAME','simple_statement',2,'p_simple_statement_input','mini.py',417),
+  ('simple_statement -> IF expression : suite ELSE : suite','simple_statement',7,'p_simple_statement_if','mini.py',422),
+  ('simple_statement -> WHILE expression : suite','simple_statement',4,'p_simple_statement_while','mini.py',427),
+  ('parameters -> NAME','parameters',1,'p_parameters','mini.py',432),
+  ('simple_statement -> FUNCTION NAME ( parameters ) : suite','simple_statement',7,'p_simple_statement_function','mini.py',437),
+  ('simple_statement -> RETURN expression','simple_statement',2,'p_simple_statement_return','mini.py',442),
+  ('expression -> expression AND expression','expression',3,'p_expression_boolean_op','mini.py',447),
+  ('expression -> expression OR expression','expression',3,'p_expression_boolean_op','mini.py',448),
+  ('expression -> NOT expression','expression',2,'p_expression_boolean_op','mini.py',449),
+  ('simple_statement -> CLASS NAME : suite','simple_statement',4,'p_simple_statement_class','mini.py',457),
+  ('simple_statement -> OBJECT NAME = NAME ( )','simple_statement',6,'p_simple_statement_object','mini.py',462),
+  ('simple_statement -> CONSTRUCTOR ( parameters ) : suite','simple_statement',6,'p_simple_statement_constructor','mini.py',467),
+  ('simple_statement -> TRY : suite catch finally','simple_statement',5,'p_simple_statement_try_catch_finally','mini.py',472),
+  ('catch -> CATCH expression : suite','catch',4,'p_catch','mini.py',477),
+  ('finally -> FINALLY : suite','finally',3,'p_finally','mini.py',482),
+  ('suite -> ( statement_list )','suite',3,'p_suite','mini.py',488),
 ]
