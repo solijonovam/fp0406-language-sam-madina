@@ -21,26 +21,6 @@ reserved = {
     "pass": "PASS",
     "say": "SAY",
     "set": "SET",
-    "input": "INPUT",
-    "if": "IF",
-    "else": "ELSE",
-    "while": "WHILE",
-    "end": "END",
-    "true": "TRUE",
-    "false": "FALSE",
-    "and": "AND",
-    "or": "OR",
-    "not": "NOT",
-    "function": "FUNCTION",
-    "return": "RETURN",
-    "class": "CLASS",
-    "object": "OBJECT",
-    "constructor": "CONSTRUCTOR",
-    "try": "TRY",
-    "catch": "CATCH",
-    "finally": "FINALLY",
-    "suite": "SUITE",
-    "parameters": "PARAMETERS"
 }
 
 # tokens
@@ -85,128 +65,6 @@ def t_SET(t):
     r'set'
     t.type = reserved.get(t.value, 'SET')
     return t
-
-
-def t_INPUT(t):
-    r'input'
-    t.type = reserved.get(t.value, 'INPUT')
-    return t
-
-
-def t_IF(t):
-    r'if'
-    t.type = reserved.get(t.value, 'IF')
-    return t
-
-
-def t_ELSE(t):
-    r'else'
-    t.type = reserved.get(t.value, 'ELSE')
-    return t
-
-
-def t_WHILE(t):
-    r'while'
-    t.type = reserved.get(t.value, 'WHILE')
-    return t
-
-
-def t_END(t):
-    r'end'
-    t.type = reserved.get(t.value, 'END')
-    return t
-
-
-def t_TRUE(t):
-    r'true'
-    t.type = reserved.get(t.value, 'TRUE')
-    return t
-
-
-def t_FALSE(t):
-    r'false'
-    t.type = reserved.get(t.value, 'FALSE')
-    return t
-
-
-def t_AND(t):
-    r'and'
-    t.type = reserved.get(t.value, 'AND')
-    return t
-
-
-def t_OR(t):
-    r'or'
-    t.type = reserved.get(t.value, 'OR')
-    return t
-
-
-def t_NOT(t):
-    r'not'
-    t.type = reserved.get(t.value, 'NOT')
-    return t
-
-
-def t_FUNCTION(t):
-    r'function'
-    t.type = reserved.get(t.value, 'FUNCTION')
-    return t
-
-def t_RETURN(t):
-    r'return'
-    t.type = reserved.get(t.value, 'RETURN')
-    return t
-
-
-def t_CLASS(t):
-    r'class'
-    t.type = reserved.get(t.value, 'CLASS')
-    return t
-
-
-def t_OBJECT(t):
-    r'object'
-    t.type = reserved.get(t.value, 'OBJECT')
-    return t
-
-
-def t_CONSTRUCTOR(t):
-    r'constructor'
-    t.type = reserved.get(t.value, 'CONSTRUCTOR')
-    return t
-
-def t_TRY(t):
-    r'try'
-    t.type = reserved.get(t.value, 'TRY')
-    return t
-
-def t_CATCH(t):
-    r'catch'
-    t.type = reserved.get(t.value, 'CATCH')
-    return t
-
-
-def t_FINALLY(t):
-    r'finally'
-    t.type = reserved.get(t.value, 'FINALLY')
-    return t
-
-
-def t_SUITE(t):
-    r'suite'
-    t.type = reserved.get(t.value, 'SUITE')
-    return t
-
-
-def t_PARAMETRS(t):
-    r'parameters'
-    t.type = reserved.get(t.value, 'PARAMETERS')
-    return t
-
-
-
-
-
 
 
 # Helper function for NUMBER token
@@ -258,7 +116,6 @@ def t_DQ_STRING(t):
     # noinspection PySingleQuotedDocstring
     r'"[^"\\]*(?:\\.[^"\\]*)*"'
     return t
-
 
 # noinspection PyPep8Naming
 # noinspection PySingleQuotedDocstring
@@ -413,34 +270,6 @@ def p_simple_statement_set(p):
     p[0] = ASTNODE("set", value=p[2], children=[p[4]])
 
 
-def p_simple_statement_input(p):
-    """simple_statement : INPUT NAME"""
-    p[0] = ASTNODE("input", value=p[2])
-
-
-def p_simple_statement_if(p):
-    """simple_statement : IF expression ':' suite ELSE ':' suite"""
-    p[0] = ASTNODE("if", children=[p[2], p[4], p[7]])
-
-
-def p_simple_statement_while(p):
-    """simple_statement : WHILE expression ':' suite"""
-    p[0] = ASTNODE("while", children=[p[2], p[4]])
-
-
-def p_parameters(p):
-    """parameters : NAME"""
-    p[0] = ASTNODE("parameters", value=p[1])
-
-
-def p_simple_statement_function(p):
-    """simple_statement : FUNCTION NAME '(' parameters ')' ':' suite"""
-    p[0] = ASTNODE("function", value=p[2], children=[p[4], p[7]])
-
-
-def p_simple_statement_return(p):
-    """simple_statement : RETURN expression"""
-    p[0] = ASTNODE("return", children=[p[2]])
 
 
 def p_expression_boolean_op(p):
@@ -451,43 +280,6 @@ def p_expression_boolean_op(p):
         p[0] = ASTNODE("boolean_op", value=p[2], children=[p[1], p[3]])
     else:
         p[0] = ASTNODE("boolean_op", value=p[1], children=[p[2]])
-
-
-def p_simple_statement_class(p):
-    """simple_statement : CLASS NAME ':' suite"""
-    p[0] = ASTNODE("class", value=p[2], children=[p[4]])
-
-
-def p_simple_statement_object(p):
-    """simple_statement : OBJECT NAME '=' NAME '(' ')'"""
-    p[0] = ASTNODE("object", value=p[2], children=[p[4]])
-
-
-def p_simple_statement_constructor(p):
-    """simple_statement : CONSTRUCTOR '(' parameters ')' ':' suite"""
-    p[0] = ASTNODE("constructor", children=[p[3], p[6]])
-
-
-def p_simple_statement_try_catch_finally(p):
-    """simple_statement : TRY ':' suite catch finally"""
-    p[0] = ASTNODE("try_catch_finally", children=[p[3], p[4], p[5]])
-
-
-def p_catch(p):
-    """catch : CATCH expression ':' suite"""
-    p[0] = ASTNODE("catch", children=[p[2], p[4]])
-
-
-def p_finally(p):
-    """finally : FINALLY ':' suite"""
-    p[0] = ASTNODE("finally", children=[p[3]])
-
-
-def p_suite(p):
-    """
-    suite : '(' statement_list ')'
-    """
-    p[0] = ASTNODE('SUITE', [p[2]])
 
 
 # p_error() is required
@@ -505,12 +297,7 @@ parser = yacc.yacc()
 if __name__ == "__main__":
     # a test program; the program can be read from a file, too;
     program = """
-        // top of the program
-        a = 3.174; b = 5; pass;
-        // comment by itself
-        c = 7 
-            + a; // multiline assignment with expression :-)
-        d = 2 * (a + b) * c; e = -d; ; ;;
+    say "Madina was here";
     """
 
     root = None
@@ -522,6 +309,9 @@ if __name__ == "__main__":
     mini_ast.process_ast()  # ------------ Execute the program (or emit it if writing a compiler)
 
     # diagnostic information
-    print("AST stack: {}".format(mini_ast.stack.stack))
-    print("Names:\n", mini_ast.names)
-    print("comments:\n", comments)
+    #print("AST stack: {}".format(mini_ast.stack.stack))
+    #print("Names:\n", mini_ast.names)
+    #print("comments:\n", comments)
+
+
+

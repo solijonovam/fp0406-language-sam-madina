@@ -34,6 +34,8 @@ class MiniAST(ASTPROC):
             elif node.name == "statement_list":
                 for child in node.children:
                     process_node(child)
+            elif node.name == "string":
+                self.stack.push(node.value)
             elif node.name == "binop":
                 process_node(node.children[0])
                 process_node(node.children[1])
