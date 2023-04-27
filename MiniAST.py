@@ -12,7 +12,6 @@ from ASTPROC import ASTPROC
 from ASTNODE import ASTNODE
 from Stack import Stack
 
-
 class MiniAST(ASTPROC):
 
     def __init__(self, root_node: ASTNODE=None) -> None:
@@ -41,12 +40,15 @@ class MiniAST(ASTPROC):
                 y = self.stack.pop()
                 x = self.stack.pop()
                 if node.value == "+":
-                    self.stack.push(y + x)
+                    self.stack.push(x + y)
                 elif node.value == "*":
-                    self.stack.push(y * x)
+                    self.stack.push(x * y)
+                elif node.value == "-":
+                    self.stack.push(y - x)
+                elif node.value == "/":
+                    self.stack.push(y / x)
                 else:
                     raise SyntaxError("Undefined binary operator {}".format(node.value))
-                # TODO: implement additional binary operator
             elif node.name == "number":
                 self.stack.push(node.value)
             elif node.name == "negate":

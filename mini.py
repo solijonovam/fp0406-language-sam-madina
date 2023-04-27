@@ -295,6 +295,9 @@ if __name__ == "__main__":
         ayt("Hi" + " there!"); // the MiniAST.py file needs to be fixed so that strings concatenate in order
         ayt("Is " + "it " + "Time " + "for " + "dinner?");
         ayt("sam said anything!!!!");
+        ayt(5-3);
+        ayt(5 - 2);
+        ayt (6  /  2);
     """
 
     root = None
