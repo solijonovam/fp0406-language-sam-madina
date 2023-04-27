@@ -18,7 +18,7 @@ from MiniAST import MiniAST
 
 # reserved words / keywords
 reserved = {
-    "say": "SAY",
+    "ayt": "AYT",
     "pass": "PASS"
 }
 
@@ -209,9 +209,9 @@ def p_simple_statement_assign(p):
     p[0] = ASTNODE("assign", value=p[1], children=[p[3]])
 
 
-def p_simple_statement_say(p):
-    """simple_statement : SAY '(' expression ')'"""
-    p[0] = ASTNODE("say", children=[p[3]])
+def p_simple_statement_ayt(p):
+    """simple_statement : AYT '(' expression ')'"""
+    p[0] = ASTNODE("ayt", children=[p[3]])
 
 
 # noinspection SpellCheckingInspection
@@ -290,11 +290,11 @@ if __name__ == "__main__":
         c = 7 
             + a; // multiline assignment with expression :-)
         d = 2 * (a + b) * c; e = -d;
-        say(d);
-        say("Hello, World!");
-        say("Hi" + " there!"); // the MiniAST.py file needs to be fixed so that strings concatenate in order
-        say("Is " + "it " + "Time " + "for " + "dinner?");
-        say("sam said anything!!!!");
+        ayt(d);
+        ayt("Hello, World!");
+        ayt("Hi" + " there!"); // the MiniAST.py file needs to be fixed so that strings concatenate in order
+        ayt("Is " + "it " + "Time " + "for " + "dinner?");
+        ayt("sam said anything!!!!");
     """
 
     root = None
