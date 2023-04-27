@@ -3,9 +3,7 @@
 College: Berea College
  Course: CSC420 Programming Languages (Summer 2023)
 Purpose: A simple language interpreter
-
   Notes:
-
 History:
             2023-04-05, DMW, added inline comment
             2023-04-05, DMW, created
@@ -285,14 +283,8 @@ if __name__ == "__main__":
     # a test program; the program can be read from a file, too;
     program = """
         // top of the program
-        a = 3.174; b = 5;
-        // comment by itself
-        c = 7 
-            + a; // multiline assignment with expression :-)
-        d = 2 * (a + b) * c; e = -d;
-        say(d);
         say("Hello, World!");
-        say("Hi" + " there!"); // the MiniAST.py file needs to be fixed so that strings concatenate in order
+        say("Hi" + " there!"); 
         say("Is " + "it " + "Time " + "for " + "dinner?");
         say("sam said anything!!!!");
     """

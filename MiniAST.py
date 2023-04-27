@@ -3,9 +3,7 @@
 College: Berea College
  Course: CSC420 Programming Languages (Summer 2023)
 Purpose: Abstract Syntax Tree Processor for mini.py
-
   Notes:
-
 History:
             2023-04-05, DMW, created
 """
