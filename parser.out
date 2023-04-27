@@ -10,7 +10,7 @@ Rule 4     statement -> simple_statement SEMICOLON
 Rule 5     statement -> SEMICOLON
 Rule 6     simple_statement -> PASS
 Rule 7     simple_statement -> NAME = expression
-Rule 8     simple_statement -> SAY ( expression )
+Rule 8     simple_statement -> AYT ( expression )
 Rule 9     expression -> expression + expression
 Rule 10    expression -> expression - expression
 Rule 11    expression -> expression * expression
@@ -33,11 +33,11 @@ Terminals, with rules where they appear
 -                    : 10 14
 /                    : 12
 =                    : 7
+AYT                  : 8
 DQ_STRING            : 18
 NAME                 : 7 20
 NUMBER               : 17
 PASS                 : 6
-SAY                  : 8
 SEMICOLON            : 4 5
 SQ_STRING            : 19
 ^                    : 13
@@ -63,12 +63,12 @@ state 0
     (5) statement -> . SEMICOLON
     (6) simple_statement -> . PASS
     (7) simple_statement -> . NAME = expression
-    (8) simple_statement -> . SAY ( expression )
+    (8) simple_statement -> . AYT ( expression )
 
     SEMICOLON       shift and go to state 5
     PASS            shift and go to state 6
     NAME            shift and go to state 7
-    SAY             shift and go to state 8
+    AYT             shift and go to state 8
 
     program                        shift and go to state 1
     statement_list                 shift and go to state 2
@@ -89,13 +89,13 @@ state 2
     (5) statement -> . SEMICOLON
     (6) simple_statement -> . PASS
     (7) simple_statement -> . NAME = expression
-    (8) simple_statement -> . SAY ( expression )
+    (8) simple_statement -> . AYT ( expression )
 
     $end            reduce using rule 1 (program -> statement_list .)
     SEMICOLON       shift and go to state 5
     PASS            shift and go to state 6
     NAME            shift and go to state 7
-    SAY             shift and go to state 8
+    AYT             shift and go to state 8
 
     statement                      shift and go to state 9
     simple_statement               shift and go to state 4
@@ -107,7 +107,7 @@ state 3
     SEMICOLON       reduce using rule 3 (statement_list -> statement .)
     PASS            reduce using rule 3 (statement_list -> statement .)
     NAME            reduce using rule 3 (statement_list -> statement .)
-    SAY             reduce using rule 3 (statement_list -> statement .)
+    AYT             reduce using rule 3 (statement_list -> statement .)
     $end            reduce using rule 3 (statement_list -> statement .)
 
 
@@ -125,7 +125,7 @@ state 5
     SEMICOLON       reduce using rule 5 (statement -> SEMICOLON .)
     PASS            reduce using rule 5 (statement -> SEMICOLON .)
     NAME            reduce using rule 5 (statement -> SEMICOLON .)
-    SAY             reduce using rule 5 (statement -> SEMICOLON .)
+    AYT             reduce using rule 5 (statement -> SEMICOLON .)
     $end            reduce using rule 5 (statement -> SEMICOLON .)
 
 
@@ -145,7 +145,7 @@ state 7
 
 state 8
 
-    (8) simple_statement -> SAY . ( expression )
+    (8) simple_statement -> AYT . ( expression )
 
     (               shift and go to state 12
 
@@ -157,7 +157,7 @@ state 9
     SEMICOLON       reduce using rule 2 (statement_list -> statement_list statement .)
     PASS            reduce using rule 2 (statement_list -> statement_list statement .)
     NAME            reduce using rule 2 (statement_list -> statement_list statement .)
-    SAY             reduce using rule 2 (statement_list -> statement_list statement .)
+    AYT             reduce using rule 2 (statement_list -> statement_list statement .)
     $end            reduce using rule 2 (statement_list -> statement_list statement .)
 
 
@@ -168,7 +168,7 @@ state 10
     SEMICOLON       reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     PASS            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     NAME            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
-    SAY             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
+    AYT             reduce using rule 4 (statement -> simple_statement SEMICOLON .)
     $end            reduce using rule 4 (statement -> simple_statement SEMICOLON .)
 
 
@@ -200,7 +200,7 @@ state 11
 
 state 12
 
-    (8) simple_statement -> SAY ( . expression )
+    (8) simple_statement -> AYT ( . expression )
     (9) expression -> . expression + expression
     (10) expression -> . expression - expression
     (11) expression -> . expression * expression
@@ -373,7 +373,7 @@ state 20
 
 state 21
 
-    (8) simple_statement -> SAY ( expression . )
+    (8) simple_statement -> AYT ( expression . )
     (9) expression -> expression . + expression
     (10) expression -> expression . - expression
     (11) expression -> expression . * expression
@@ -585,9 +585,9 @@ state 29
 
 state 30
 
-    (8) simple_statement -> SAY ( expression ) .
+    (8) simple_statement -> AYT ( expression ) .
 
-    SEMICOLON       reduce using rule 8 (simple_statement -> SAY ( expression ) .)
+    SEMICOLON       reduce using rule 8 (simple_statement -> AYT ( expression ) .)
 
 
 state 31
