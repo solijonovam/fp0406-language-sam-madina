@@ -44,9 +44,9 @@ class MiniAST(ASTPROC):
                 elif node.value == "*":
                     self.stack.push(x * y)
                 elif node.value == "-":
-                    self.stack.push(y - x)
+                    self.stack.push(x - y)
                 elif node.value == "/":
-                    self.stack.push(y / x)
+                    self.stack.push(x / y)
                 else:
                     raise SyntaxError("Undefined binary operator {}".format(node.value))
             elif node.name == "number":
