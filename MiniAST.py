@@ -3,9 +3,7 @@
 College: Berea College
  Course: CSC420 Programming Languages (Summer 2023)
 Purpose: Abstract Syntax Tree Processor for mini.py
-
   Notes:
-
 History:
             2023-04-05, DMW, created
 """
@@ -13,7 +11,6 @@ History:
 from ASTPROC import ASTPROC
 from ASTNODE import ASTNODE
 from Stack import Stack
-
 
 class MiniAST(ASTPROC):
 
@@ -43,12 +40,15 @@ class MiniAST(ASTPROC):
                 y = self.stack.pop()
                 x = self.stack.pop()
                 if node.value == "+":
-                    self.stack.push(y + x)
+                    self.stack.push(x + y)
                 elif node.value == "*":
-                    self.stack.push(y * x)
+                    self.stack.push(x * y)
+                elif node.value == "-":
+                    self.stack.push(x - y)
+                elif node.value == "/":
+                    self.stack.push(x / y)
                 else:
                     raise SyntaxError("Undefined binary operator {}".format(node.value))
-                # TODO: implement additional binary operator
             elif node.name == "number":
                 self.stack.push(node.value)
             elif node.name == "negate":
