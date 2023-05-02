@@ -7,7 +7,6 @@ Purpose: Abstract Syntax Tree Processor for mini.py
 History:
             2023-04-05, DMW, created
 """
-
 from ASTPROC import ASTPROC
 from ASTNODE import ASTNODE
 from Stack import Stack
@@ -18,6 +17,7 @@ class MiniAST(ASTPROC):
         super().__init__(root_node)
         self.stack = Stack()
         self.names = {}
+        self.functions = {}
         self.reserved_names = []
 
     def process_ast(self):
@@ -58,11 +58,19 @@ class MiniAST(ASTPROC):
                 process_node(node.children[0])
                 self.names[node.value] = self.stack.pop()
             elif node.name == "name":
-                try:
-                    self.stack.push(self.names[node.value])
-                except LookupError:
-                    print("Undefined name '%s'" % node.value)
-                    return
+                if node.value in self.functions:
+                    arg_list = []
+                    for child in node.children:
+                        process_node(child)
+                        arg_list.append(self.stack.pop())
+                    arg_list.reverse()
+                    self.stack.push(self.functions[node.value](*arg_list))
+                else:
+                    try:
+                        self.stack.push(self.names[node.value])
+                    except LookupError:
+                        print("Undefined name '%s'" % node.value)
+                        return
             elif node.name == "pass":
                 pass
             elif node.name == "ayt":
@@ -70,9 +78,10 @@ class MiniAST(ASTPROC):
                 process_node(node.children[0])
                 self.stack.check_underflow(1)
                 print(self.stack.pop())
-            else:
-                error_message = "Undefined node name: {}".format(node.name)
-                raise SyntaxError(error_message)
+            elif node.name == "funktsiyasi":
+                self.names[node.value] = node.children[0]
+            elif node.name == "yugur":
+                process_node(self.names[node.value])
 
         try:
             process_node(self.root_node)
