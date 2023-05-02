@@ -1,5 +1,6 @@
 #######################################
 # IMPORTS
+# ACKNOWLEDGEMENTS: CodePulse YouTube channel
 #######################################
 
 from stringsArrows import *
@@ -10,9 +11,9 @@ import string
 # CONSTANTS
 #######################################
 
-DIGITS = '0123456789'
-LETTERS = string.ascii_letters
-LETTERS_DIGITS = LETTERS + DIGITS
+RAQAMLAR = '0123456789'  #digits
+XAT = string.ascii_letters #LETTER
+XAT_RAQAMLAR = XAT + RAQAMLAR #LETTER + DIGITS
 
 
 #######################################
@@ -131,7 +132,7 @@ TT_ARROW = 'ARROW'
 KEYWORDS = [
     'ozgaruvchan', #variable
     'VA', #and
-    'YOKKI', #or
+    'YOKI', #or
     'YOQ', #not
     'AGAR', #if
     'BB',  #elif, boshqa bolsa
@@ -188,9 +189,9 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
-            elif self.current_char in DIGITS:
+            elif self.current_char in RAQAMLAR:
                 tokens.append(self.make_number())
-            elif self.current_char in LETTERS:
+            elif self.current_char in XAT:
                 tokens.append(self.make_identifier())
             elif self.current_char == '+':
                 tokens.append(Token(TT_QOSHISH, pos_start=self.pos))
@@ -239,7 +240,7 @@ class Lexer:
         dot_count = 0
         pos_start = self.pos.copy()
 
-        while self.current_char != None and self.current_char in DIGITS + '.':
+        while self.current_char != None and self.current_char in RAQAMLAR + '.':
             if self.current_char == '.':
                 if dot_count == 1: break
                 dot_count += 1
@@ -255,7 +256,7 @@ class Lexer:
         id_str = ''
         pos_start = self.pos.copy()
 
-        while self.current_char != None and self.current_char in LETTERS_DIGITS + '_':
+        while self.current_char != None and self.current_char in XAT_RAQAMLAR + '_':
             id_str += self.current_char
             self.advance()
 
@@ -486,7 +487,7 @@ class Parser:
         if not res.error and self.current_tok.type != TT_FAILNYOHIRI:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                "Kutulgan '+', '-', '*', '/', '^', '==', '!=', '<', '>', <=', '>=', 'VA' or 'YOKKI'"
+                "Kutulgan '+', '-', '*', '/', '^', '==', '!=', '<', '>', <=', '>=', 'VA' or 'YOKI'"
               #   "Expected '+', '-', '*', '/', '^', '==', '!=', '<', '>', <=', '>=', 'AND' or 'OR'"
             ))
         return res
@@ -612,7 +613,7 @@ class Parser:
                     return res.failure(InvalidSyntaxError(
                         self.current_tok.pos_start, self.current_tok.pos_end,
                         #f"Expected ',' or ')'"
-                        f"Kutulgan ',' yokki ')'"
+                        f"Kutulgan ',' yoki ')'"
                     ))
 
                 res.register_advancement()
@@ -861,7 +862,7 @@ class Parser:
             if self.current_tok.type != TT_CHQAVS:
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
-                    f"Kutulgan identifier yokki '('"
+                    f"Kutulgan identifier yoki '('"
                 ))
 
         res.register_advancement()
@@ -890,13 +891,13 @@ class Parser:
             if self.current_tok.type != TT_OQAVS:
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
-                    f"Kutulgan ',' yokki ')'"
+                    f"Kutulgan ',' yoki ')'"
                 ))
         else:
             if self.current_tok.type != TT_OQAVS:
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
-                    f"Kutulgan identifier yokki ')'"
+                    f"Kutulgan identifier yoki ')'"
                 ))
 
         res.register_advancement()
@@ -933,7 +934,7 @@ class Parser:
             op_tok = self.current_tok
             res.register_advancement()
             self.advance()
-            right = res.register(funktiyasi_b)
+            right = res.register(funktiyasi_b())
             if res.error: return res
             left = BinOpNode(left, op_tok, right)
 
