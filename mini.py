@@ -3,9 +3,7 @@
 College: Berea College
  Course: CSC420 Programming Languages (Summer 2023)
 Purpose: A simple language interpreter
-
   Notes:
-
 History:
             2023-04-05, DMW, added inline comment
             2023-04-05, DMW, created
@@ -18,20 +16,26 @@ from MiniAST import MiniAST
 
 # reserved words / keywords
 reserved = {
-    "ayt": "AYT",
-    "pass": "PASS"
+    "ayt": "AYT", #PRINT
+    "pass": "PASS",
+    "uchun": "UCHUN", #FOR
+    "agar": "AGAR", #IF
+    "boshqa": "BOSHQA", #Else
+    "funktsiyasi": "FUNKTSIYASI", #Function (subroutine)
+    "yugur": "YUGUR", #RUN
+
 }
 
 # tokens
 tokens = [
-    'DQ_STRING', 'NAME', 'NUMBER', 'SEMICOLON', 'SQ_STRING'  # , 'LPRAREN', 'RPAREN'
+    'DQ_STRING', 'NAME', 'NUMBER', 'SEMICOLON', 'SQ_STRING', 'COMMA', #  , 'LPAREN', 'RPAREN'
 ]
 
 # all tokens, reserved words and keywords, combined
 tokens += list(reserved.values())
 
 # literal characters recognized by the lexer and parser
-literals = ['=', '+', '-', '*', '/', '(', ')', ';']
+literals = ['=', '+', '-', '*', '/', '(', ')', ';', '{', '}' ]
 
 # ---------------------------------------------------------- TOKEN DEFINITIONS
 
@@ -76,9 +80,11 @@ def t_NUMBER(t):
 # noinspection PyPep8Naming
 # noinspection PySingleQuotedDocstring
 def t_SEMICOLON(t):
-    """;"""
+    r'\n+'
+    #""";"""
     # r'(\;|\s)+'
     return t
+
 
 
 # 2021-11-11, DMW, added the ability to handle single quote strings
@@ -105,18 +111,20 @@ def t_INLINE_COMMENT(t):
     r'//.*'
     comments[t.lexer.lineno] = t.value
     # return t
-
+def t_COMMA(t):
+    r','
+    return t
 
 # noinspection PyPep8Naming
 # noinspection SpellCheckingInspection
-# def t_LPAREN(t):
+#def t_LPAREN(t):
 #     """\("""
 #     return t
 
 
 # noinspection PyPep8Naming
 # noinspection SpellCheckingInspection
-# def t_LPAREN(t):
+#def t_LPAREN(t):
 #     """\)"""
 #     return t
 
@@ -267,6 +275,19 @@ def p_expression_name(p):
     """expression : NAME"""
     p[0] = ASTNODE("name", value=p[1])
 
+def p_statement_subroutine(p):
+   """statement : FUNKTSIYASI NAME statement_block """
+   p[0] = ASTNODE("funktsiyasi", value=p[2], children=[p[3]])
+
+
+def p_statement_call(p):
+   """statement : YUGUR NAME """
+   p[0] = ASTNODE("yugur", value=p[2])
+
+def p_statement_block(p):
+    """statement_block : '{' statement_list '}' """
+    p[0] = ASTNODE('statement_list', children=[p[2]])
+
 
 # p_error() is required
 def p_error(p):
@@ -284,20 +305,43 @@ if __name__ == "__main__":
 
     # a test program; the program can be read from a file, too;
     program = """
-        // top of the program
-        a = 3.174; b = 5;
-        // comment by itself
-        c = 7 
-            + a; // multiline assignment with expression :-)
-        d = 2 * (a + b) * c; e = -d;
-        ayt(d);
-        ayt("Hello, World!");
-        ayt("Hi" + " there!"); // the MiniAST.py file needs to be fixed so that strings concatenate in order
-        ayt("Is " + "it " + "Time " + "for " + "dinner?");
-        ayt("sam said anything!!!!");
-        ayt(5-3);
-        ayt(5 - 2);
-        ayt (6  /  2);
+        ayt("")
+        ayt("--Variables--")
+        x = 5 + 3
+        y = 2
+        ayt(x)
+        a =  3 * y
+        ayt(a)
+        
+        ayt("")
+        ayt("--Strings--")
+        ayt("Hello World!")
+        x = "This is example 1 "
+        ayt(x)
+        ayt("This is example 2 ")
+        y = "combined with example 3 "
+        ayt(x + y)
+        
+        ayt("")
+        //FUNCTIONS
+        //aniqlash foo(x, y) = x * y
+        //output = foo(3, 4)
+        //qaytish output
+        
+        //ayt(output)
+    
+        ayt("")
+        ayt("--SUB ROUTINES--")
+        funktsiyasi hello {
+        ayt("hello world")
+        x = 2 * 5
+        ayt (x)
+        }
+        yugur hello
+        
+        
+        
+        
     """
 
     root = None
