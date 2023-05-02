@@ -305,6 +305,7 @@ if __name__ == "__main__":
 
     # a test program; the program can be read from a file, too;
     program = """
+        ayt("")
         ayt("--Variables--")
         x = 5 + 3
         y = 2
@@ -312,7 +313,7 @@ if __name__ == "__main__":
         a =  3 * y
         ayt(a)
         
-        
+        ayt("")
         ayt("--Strings--")
         ayt("Hello World!")
         x = "This is example 1 "
@@ -321,6 +322,7 @@ if __name__ == "__main__":
         y = "combined with example 3 "
         ayt(x + y)
         
+        ayt("")
         //FUNCTIONS
         //aniqlash foo(x, y) = x * y
         //output = foo(3, 4)
@@ -328,15 +330,16 @@ if __name__ == "__main__":
         
         //ayt(output)
     
-    
+        ayt("")
         ayt("--SUB ROUTINES--")
         funktsiyasi hello {
         ayt("hello world")
         x = 2 * 5
         ayt (x)
         }
-    
         yugur hello
+        
+        
         
         
     """
