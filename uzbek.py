@@ -551,7 +551,7 @@ class Parser:
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                "Kutulgan int, float, identifier, '+', '-', '(' or 'YOQ'"
+                "Kutulgan raqam, suzmoq, identifier, '+', '-', '(' or 'YOQ'"
               #"Expected int, float, identifier, '+', '-', '(' or 'NOT'"
             ))
 

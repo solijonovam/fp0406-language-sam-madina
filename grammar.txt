@@ -1,7 +1,40 @@
-expr    : term ((QOSHISH|AJRASH) term)*
 
-term    : factor ((KOPAYTIRMOQ|BOLMOQ) factor)*
+expr    : KEYWORD:VAR IDENTIFIER EQ expr
+				:	term ((QOSHISH|AJRASH) term)*
+comp-expr		: NOT comp-expr
+						: arith-expr ((EE|LT|GT|LTE|GTE) arith-expr)*
+arith-expr	:	term ((QOSHISH|AJRASH) term)*
 
-factor  : INT|FLOAT
-				: (QOSHISH|AJRASH) factor
-				: OQAVS expr CHQAVS
+term    : factor ((KOPAYTIRMOQ|BOLMOV) factor)*
+
+factor	: ( RAQAM|SUZMOQ) factor
+				: power
+
+power		: atom (POW factor)*
+atom 		: RAQAM|SUZMOQ|IDENTIFIER
+				: CHQAVS expr OQAVS
+
+
+
+
+call				: atom (CHQAVS (expr (COMMA expr)*)? OQAVS)?
+
+atom 				: RAWAM|SUZMOQ|IDENTIFIER
+					: CHQAVS expr OQAVS
+					: agar-expr
+					: uchun-expr
+					: payt-expr
+					: funktiyasi-def
+
+if-expr			: KEYWORD:AGAR expr KEYWORD:KEYIN expr
+							(KEYWORD:BB expr KEYWORD:KEYIN expr)*
+							(KEYWORD:BOSHQA expr)?
+
+for-expr		: KEYWORD:UCHUN IDENTIFIER EQ expr KEYWORD:TO expr
+							(KEYWORD:STEP expr)? KEYWORD:KEYIN expr
+
+while-expr	: KEYWORD:PAYT expr KEYWORD:KEYIN expr
+
+func-def		: KEYWORD:FUNKTIYASI IDENTIFIER?
+							CHQAVS (IDENTIFIER (COMMA IDENTIFIER)*)? OQAVS
+							ARROW expr
