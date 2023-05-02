@@ -1,0 +1,7 @@
+expr    : term ((QOSHISH|AJRASH) term)*
+
+term    : factor ((KOPAYTIRMOQ|BOLMOQ) factor)*
+
+factor  : INT|FLOAT
+				: (QOSHISH|AJRASH) factor
+				: OQAVS expr CHQAVS
